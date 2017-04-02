@@ -40,10 +40,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\Sandbox\Configurations\ICsvConfiguration.cs" />
-    <Compile Include="Interfaces\Sandbox\Services\ICsvReader.cs" />
-    <Compile Include="Interfaces\Sandbox\Services\ICsvWriter.cs" />
-    <Compile Include="Interfaces\Sandbox\Services\IFileEncodingResolver.cs" />
+    <Compile Include="Interfaces\Configurations\ICsvConfiguration.cs" />
+    <Compile Include="Interfaces\Configurations\IEncodingConfiguration.cs" />
+    <Compile Include="Interfaces\Configurations\IOutputConfiguration.cs" />
+    <Compile Include="Interfaces\Services\ICachedCsvLineConsumer.cs" />
+    <Compile Include="Interfaces\Services\ICachedCsvLineConsumerFactory.cs" />
+    <Compile Include="Interfaces\Services\ICsvReader.cs" />
+    <Compile Include="Interfaces\Services\ICsvFieldFactory.cs" />
+    <Compile Include="Interfaces\Services\ICsvLineConsumer.cs" />
+    <Compile Include="Interfaces\Services\ICsvLineConsumerFactory.cs" />
+    <Compile Include="Interfaces\Services\ICsvLineFactory.cs" />
+    <Compile Include="Interfaces\Services\ICsvLinesCache.cs" />
+    <Compile Include="Interfaces\Services\ICachedCsvReader.cs" />
+    <Compile Include="Interfaces\Services\ICsvStreamReader.cs" />
+    <Compile Include="Interfaces\Services\ICsvStreamReaderFactory.cs" />
+    <Compile Include="Interfaces\Services\ICsvWriter.cs" />
+    <Compile Include="Interfaces\Services\ITextReaderFactory.cs" />
+    <Compile Include="Interfaces\Services\ITextWriterFactory.cs" />
+    <Compile Include="Models\CsvField.cs" />
+    <Compile Include="Models\CsvLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -62,8 +62,10 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Integration\Sandbox\Services\CsvReaderTests.cs" />
-    <Compile Include="Integration\Sandbox\Services\CsvWriterTests.cs" />
+    <Compile Include="Integration\Services\CsvReaderTests.cs" />
+    <Compile Include="Integration\Services\CachedCsvReaderTests.cs" />
+    <Compile Include="Integration\Services\CsvWriterTests.cs" />
+    <Compile Include="Integration\Services\TextReaderFactoryTests.cs" />
     <Compile Include="Unit\UnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -82,16 +84,28 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Integration\TestCases\Test.04.UTF16BE.BOM.txt">
+    <Content Include="Integration\TestCases\Test.00.UTF8.NoBOM.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Integration\TestCases\Test.01.UTF8.BOM.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Integration\TestCases\Test.07.UTF32.BOM.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\Test.05.UTF16LE.BOM.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\Test.04.UTF16BE.BOM.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Integration\TestCases\Test.03.Empty.No.BOM.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Integration\TestCases\Test.02.UTF8.BOM.txt">
+    <Content Include="Integration\TestCases\Test.02.UTF8.BOM.FieldWithCrLf.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\Test.06.ANSII.Windows-1250.No.BOM.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
