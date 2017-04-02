@@ -30,6 +30,7 @@ namespace CSV.Parser.Logic.Services
             while ((rawLine = textReader.ReadLine()) != null)
             {
                 // TODO/REMARKS: Empty lines should not be ignored
+                // TODO: Implement rfc4180 standard in CsvStreamReader & CsvLineFactory (it may be removed or refactored)
                 var csvLine = _csvLineFactory.Create(rawLine);
 
                 csvLineConsumer.Consume(csvLine);

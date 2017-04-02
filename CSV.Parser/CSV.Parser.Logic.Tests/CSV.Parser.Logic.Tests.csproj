@@ -84,7 +84,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Integration\TestCases\Test.00.UTF8.NoBOM.txt">
+    <Content Include="Integration\TestCases\Test.00.UTF8.No.BOM.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Integration\TestCases\Test.01.UTF8.BOM.txt">
