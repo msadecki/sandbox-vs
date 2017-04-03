@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using CSV.Parser.Logic.Abstractions.Interfaces.Configurations;
 using CSV.Parser.Logic.Abstractions.Interfaces.Services;
@@ -18,15 +19,18 @@ namespace CSV.Parser.Logic.Services
     {
         private readonly ICsvConfiguration _csvConfiguration;
         private readonly ICsvLineFactory _csvLineFactory;
+        private readonly ICsvFieldFactory _csvFieldFactory;
         private readonly IBufferableReaderFactory _bufferableReaderFactory;
 
         public CsvStreamReader(
             ICsvConfiguration csvConfiguration,
             ICsvLineFactory csvLineFactory,
+            ICsvFieldFactory csvFieldFactory,
             IBufferableReaderFactory bufferableReaderFactory)
         {
             _csvConfiguration = csvConfiguration;
             _csvLineFactory = csvLineFactory;
+            _csvFieldFactory = csvFieldFactory;
             _bufferableReaderFactory = bufferableReaderFactory;
         }
 
@@ -42,6 +46,7 @@ namespace CSV.Parser.Logic.Services
             var rawLineBuilder = new StringBuilder(1024);
             var endOfLineLengthToMatch = _csvConfiguration.EndOfLine.Length;
             var isEndOfLineSeekEnabled = true;
+            var isDelimiterSeekEnabled = true;
 
             while (bufferableReader.ReadBuffer())
             {
@@ -61,7 +66,12 @@ namespace CSV.Parser.Logic.Services
                     if (endOfLineLengthToMatch == 0)
                     {
                         var rawLine = rawLineBuilder.ToString(0, rawLineBuilder.Length - _csvConfiguration.EndOfLine.Length);
-                        var csvLine = _csvLineFactory.Create(rawLine);
+
+                        // TODO: DRY (try to move to CsvFieldParser)
+                        var csvLine = _csvLineFactory.Create(128);
+                        Array.ForEach(
+                            rawLine.Split(_csvConfiguration.Delimiter),
+                            fieldContent => csvLine.Fields.Add(_csvFieldFactory.Create(fieldContent)));
                         csvLineConsumer.Consume(csvLine);
                         counter++;
 
@@ -75,7 +85,11 @@ namespace CSV.Parser.Logic.Services
             if (rawLineBuilder.Length > 0)
             {
                 var rawLine = rawLineBuilder.ToString();
-                var csvLine = _csvLineFactory.Create(rawLine);
+
+                var csvLine = _csvLineFactory.Create(128);
+                Array.ForEach(
+                    rawLine.Split(_csvConfiguration.Delimiter),
+                    fieldContent => csvLine.Fields.Add(_csvFieldFactory.Create(fieldContent)));
                 csvLineConsumer.Consume(csvLine);
                 counter++;
 

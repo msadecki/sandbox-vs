@@ -4,6 +4,6 @@ namespace CSV.Parser.Logic.Abstractions.Interfaces.Services
 {
     public interface ICsvLineFactory
     {
-        CsvLine Create(string rawLine);
+        ICsvLine Create(int capacity);
     }
 }

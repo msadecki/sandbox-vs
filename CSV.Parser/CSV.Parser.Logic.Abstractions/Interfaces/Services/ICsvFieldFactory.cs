@@ -4,6 +4,6 @@ namespace CSV.Parser.Logic.Abstractions.Interfaces.Services
 {
     public interface ICsvFieldFactory
     {
-        CsvField Create(string fieldContent);
+        ICsvField Create(string fieldContent);
     }
 }

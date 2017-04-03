@@ -5,6 +5,6 @@ namespace CSV.Parser.Logic.Abstractions.Interfaces.Services
 {
     public interface ICsvLineConsumer : IDisposable
     {
-        void Consume(CsvLine csvLine);
+        void Consume(ICsvLine csvLine);
     }
 }

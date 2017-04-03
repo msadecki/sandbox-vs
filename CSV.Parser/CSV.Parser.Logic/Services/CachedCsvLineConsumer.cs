@@ -6,11 +6,11 @@ namespace CSV.Parser.Logic.Services
 {
     public class CachedCsvLineConsumer : ICachedCsvLineConsumer
     {
-        private readonly List<CsvLine> _csvCsvLines = new List<CsvLine>();
+        private readonly List<ICsvLine> _csvCsvLines = new List<ICsvLine>();
 
-        public IList<CsvLine> CsvLines => _csvCsvLines;
+        public IList<ICsvLine> CsvLines => _csvCsvLines;
 
-        public void Consume(CsvLine csvLine)
+        public void Consume(ICsvLine csvLine)
         {
             _csvCsvLines.Add(csvLine);
         }

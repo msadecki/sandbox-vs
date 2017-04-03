@@ -2,8 +2,8 @@
 
 namespace CSV.Parser.Logic.Abstractions.Models
 {
-    public class CsvLine
+    public interface ICsvLine
     {
-        public List<CsvField> Fields { get; set; }
+        IList<ICsvField> Fields { get; }
     }
 }

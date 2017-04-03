@@ -11,9 +11,8 @@ namespace CSV.Parser.Logic.Services
 
             return new CsvStreamReader(
                 csvConfiguration,
-                new CsvLineFactory(
-                    csvConfiguration,
-                    new CsvFieldFactory()),
+                new CsvLineFactory(),
+                new CsvFieldFactory(),
                 new BufferableReaderFactory(
                     new BufferableReaderConfiguration()));
         }

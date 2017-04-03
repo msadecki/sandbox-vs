@@ -19,12 +19,12 @@ namespace CSV.Parser.Logic.Services
             _textWriter = textWriterFactory.Create();
         }
 
-        public void Consume(CsvLine csvLine)
+        public void Consume(ICsvLine csvLine)
         {
             _textWriter.Write(CreateOuputLine(csvLine));
         }
 
-        private StringBuilder CreateOuputLine(CsvLine csvLine)
+        private StringBuilder CreateOuputLine(ICsvLine csvLine)
         {
             var outputLine = new StringBuilder();
 

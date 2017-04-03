@@ -20,7 +20,7 @@ namespace CSV.Parser.Logic.Services
             _csvStreamReaderFactory = csvStreamReaderFactory;
         }
 
-        public IList<CsvLine> Read(string filePath)
+        public IList<ICsvLine> Read(string filePath)
         {
             using (var textReader = _textReaderFactory.Create(filePath))
             {

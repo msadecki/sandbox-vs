@@ -5,6 +5,6 @@ namespace CSV.Parser.Logic.Abstractions.Interfaces.Services
 {
     public interface ICachedCsvReader
     {
-        IList<CsvLine> Read(string filePath);
+        IList<ICsvLine> Read(string filePath);
     }
 }

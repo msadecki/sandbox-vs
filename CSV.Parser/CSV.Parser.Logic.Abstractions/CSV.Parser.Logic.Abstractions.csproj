@@ -60,8 +60,8 @@
     <Compile Include="Interfaces\Services\ICsvWriter.cs" />
     <Compile Include="Interfaces\Services\ITextReaderFactory.cs" />
     <Compile Include="Interfaces\Services\ITextWriterFactory.cs" />
-    <Compile Include="Models\CsvField.cs" />
-    <Compile Include="Models\CsvLine.cs" />
+    <Compile Include="Models\ICsvField.cs" />
+    <Compile Include="Models\ICsvLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

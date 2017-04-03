@@ -5,6 +5,6 @@ namespace CSV.Parser.Logic.Abstractions.Interfaces.Services
 {
     public interface ICsvLinesCache
     {
-        IList<CsvLine> CsvLines { get; }
+        IList<ICsvLine> CsvLines { get; }
     }
 }
