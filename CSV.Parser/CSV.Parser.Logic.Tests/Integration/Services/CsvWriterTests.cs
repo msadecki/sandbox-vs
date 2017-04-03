@@ -19,16 +19,16 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
             var filePath = @".\Integration\TestCases\Output.Write_Should_Write_To_Csv_File.csv";
             var lines = new List<string[]>
             {
-                new [] {"H1", " H2 ", @"""H3""", "H4"},
-                new [] {"V1", " V2 ", @"""V3""", "V4"},
-                new [] {"V1", " V2 ", @"""V3""", "V4"},
-                new [] {"V1", " V2 ", @"""V3""", "V4"},
-                new [] {"V1", " V2 ", @"""V3
--1
--2
-...
+                new [] {"H1.0", " H2 ", @"""H3""", "H4"},
+                
+                new [] {"V1.1", " V2 ", @"""V3""", "V4: [ąćęłńóśźż] [ĄĆĘŁŃÓŚŹŻ] "},
+                new [] {"V1.2", " V2 ", @"V3
+-1,
+-2,
+    ...
 
-""", "V4"}
+", "V4"},
+                new [] {"V1.3", " V2 ", @"V3""", "V4"}
             };
 
             // Act & Assert

@@ -40,9 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\Configurations\IBufferableReaderConfiguration.cs" />
     <Compile Include="Interfaces\Configurations\ICsvConfiguration.cs" />
     <Compile Include="Interfaces\Configurations\IEncodingConfiguration.cs" />
     <Compile Include="Interfaces\Configurations\IOutputConfiguration.cs" />
+    <Compile Include="Interfaces\Services\IBufferableReader.cs" />
+    <Compile Include="Interfaces\Services\IBufferableReaderFactory.cs" />
     <Compile Include="Interfaces\Services\ICachedCsvLineConsumer.cs" />
     <Compile Include="Interfaces\Services\ICachedCsvLineConsumerFactory.cs" />
     <Compile Include="Interfaces\Services\ICsvReader.cs" />

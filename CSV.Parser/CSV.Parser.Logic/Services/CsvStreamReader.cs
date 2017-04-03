@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using System.Text;
+using CSV.Parser.Logic.Abstractions.Interfaces.Configurations;
 using CSV.Parser.Logic.Abstractions.Interfaces.Services;
 
 namespace CSV.Parser.Logic.Services
@@ -14,28 +16,72 @@ namespace CSV.Parser.Logic.Services
     /// </summary>
     public class CsvStreamReader : ICsvStreamReader
     {
+        private readonly ICsvConfiguration _csvConfiguration;
         private readonly ICsvLineFactory _csvLineFactory;
+        private readonly IBufferableReaderFactory _bufferableReaderFactory;
 
         public CsvStreamReader(
-            ICsvLineFactory csvLineFactory)
+            ICsvConfiguration csvConfiguration,
+            ICsvLineFactory csvLineFactory,
+            IBufferableReaderFactory bufferableReaderFactory)
         {
+            _csvConfiguration = csvConfiguration;
             _csvLineFactory = csvLineFactory;
+            _bufferableReaderFactory = bufferableReaderFactory;
         }
 
         public int Read(TextReader textReader, ICsvLineConsumer csvLineConsumer)
         {
+            // TODO: Implement in clean way
+            // TODO: Implement rfc4180 standard in CsvStreamReader & CsvLineFactory (it may be removed or refactored)
+            // TODO/REMARKS: Empty lines should not be ignored
             var counter = 0;
 
-            string rawLine;
-            while ((rawLine = textReader.ReadLine()) != null)
+            var bufferableReader = _bufferableReaderFactory.Create(textReader);
+
+            var rawLineBuilder = new StringBuilder(1024);
+            var endOfLineLengthToMatch = _csvConfiguration.EndOfLine.Length;
+            var isEndOfLineSeekEnabled = true;
+
+            while (bufferableReader.ReadBuffer())
             {
-                // TODO/REMARKS: Empty lines should not be ignored
-                // TODO: Implement rfc4180 standard in CsvStreamReader & CsvLineFactory (it may be removed or refactored)
+                for (var pos = 0; pos < bufferableReader.BufferLength; pos++)
+                {
+                    var currentCharacter = bufferableReader.Buffer[pos];
+
+                    rawLineBuilder.Append(currentCharacter);
+
+                    if (isEndOfLineSeekEnabled
+                        && endOfLineLengthToMatch > 0
+                        && currentCharacter == _csvConfiguration.EndOfLine[_csvConfiguration.EndOfLine.Length - endOfLineLengthToMatch])
+                    {
+                        endOfLineLengthToMatch--;
+                    }
+
+                    if (endOfLineLengthToMatch == 0)
+                    {
+                        var rawLine = rawLineBuilder.ToString(0, rawLineBuilder.Length - _csvConfiguration.EndOfLine.Length);
+                        var csvLine = _csvLineFactory.Create(rawLine);
+                        csvLineConsumer.Consume(csvLine);
+                        counter++;
+
+                        rawLineBuilder.Clear();
+                        endOfLineLengthToMatch = _csvConfiguration.EndOfLine.Length;
+                        isEndOfLineSeekEnabled = true;
+                    }
+                }
+            }
+
+            if (rawLineBuilder.Length > 0)
+            {
+                var rawLine = rawLineBuilder.ToString();
                 var csvLine = _csvLineFactory.Create(rawLine);
-
                 csvLineConsumer.Consume(csvLine);
-
                 counter++;
+
+                rawLineBuilder.Clear();
+                endOfLineLengthToMatch = _csvConfiguration.EndOfLine.Length;
+                isEndOfLineSeekEnabled = true;
             }
 
             return counter;

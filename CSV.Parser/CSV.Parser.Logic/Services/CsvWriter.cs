@@ -21,7 +21,7 @@ namespace CSV.Parser.Logic.Services
 
         public void Write(string filePath, bool append, IEnumerable<string[]> lines)
         {
-            using (var writer = new StreamWriter(filePath, append, _encodingConfiguration.OutputEncoding))
+            using (var writer = new StreamWriter(filePath, append, _encodingConfiguration.FileOutputEncoding))
             {
                 foreach (var line in lines)
                 {

@@ -17,6 +17,6 @@ namespace CSV.Parser.Logic.Configurations
         /// "\r\n"
         /// Environment.NewLine 
         /// </summary>
-        public string EndOfLine { get; } = @"\r\n";
+        public string EndOfLine { get; } = "\r\n";
     }
 }

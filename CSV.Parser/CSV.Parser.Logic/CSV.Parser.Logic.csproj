@@ -40,10 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurations\BufferableReaderConfiguration.cs" />
     <Compile Include="Configurations\EncodingConfiguration.cs" />
     <Compile Include="Configurations\OutputConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configurations\CsvConfiguration.cs" />
+    <Compile Include="Services\BufferableReaderFactory.cs" />
     <Compile Include="Services\CachedCsvLineConsumer.cs" />
     <Compile Include="Services\CachedCsvLineConsumerFactory.cs" />
     <Compile Include="Services\CsvFieldFactory.cs" />
@@ -55,6 +57,7 @@
     <Compile Include="Services\CsvStreamReader.cs" />
     <Compile Include="Services\CsvStreamReaderFactory.cs" />
     <Compile Include="Services\CsvWriter.cs" />
+    <Compile Include="Services\BufferableReader.cs" />
     <Compile Include="Services\TextReaderFactory.cs" />
     <Compile Include="Services\TextWriterFactory.cs" />
   </ItemGroup>

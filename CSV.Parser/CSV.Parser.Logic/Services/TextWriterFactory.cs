@@ -22,7 +22,7 @@ namespace CSV.Parser.Logic.Services
 
         private StreamWriter CreateStreamWriter()
         {
-            return new StreamWriter(Console.OpenStandardOutput(), _encodingConfiguration.OutputEncoding)
+            return new StreamWriter(Console.OpenStandardOutput(), _encodingConfiguration.ConsoleOutputEncoding)
             {
                 AutoFlush = true
             };

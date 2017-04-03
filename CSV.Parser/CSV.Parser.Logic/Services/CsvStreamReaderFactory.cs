@@ -10,9 +10,12 @@ namespace CSV.Parser.Logic.Services
             var csvConfiguration = new CsvConfiguration();
 
             return new CsvStreamReader(
+                csvConfiguration,
                 new CsvLineFactory(
                     csvConfiguration,
-                    new CsvFieldFactory()));
+                    new CsvFieldFactory()),
+                new BufferableReaderFactory(
+                    new BufferableReaderConfiguration()));
         }
     }
 }

@@ -15,6 +15,8 @@ namespace CSV.Parser.Logic.Configurations
         /// new UTF8Encoding(false, true)
         /// new UnicodeEncoding(false, false, true)
         /// </summary>
-        public Encoding OutputEncoding { get; } = Encoding.GetEncoding(852);
+        public Encoding ConsoleOutputEncoding { get; } = Encoding.GetEncoding(852);
+
+        public Encoding FileOutputEncoding { get; } = Encoding.UTF8;
     }
 }

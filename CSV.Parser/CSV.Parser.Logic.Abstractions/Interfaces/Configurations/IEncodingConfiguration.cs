@@ -6,6 +6,8 @@ namespace CSV.Parser.Logic.Abstractions.Interfaces.Configurations
     {
         Encoding DefaultInputEncoding { get; }
 
-        Encoding OutputEncoding { get; }
+        Encoding ConsoleOutputEncoding { get; }
+
+        Encoding FileOutputEncoding { get; }
     }
 }
