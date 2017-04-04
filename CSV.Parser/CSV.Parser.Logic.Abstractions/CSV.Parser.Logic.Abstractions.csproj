@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\OutputTarget.cs" />
     <Compile Include="Interfaces\Configurations\IBufferableReaderConfiguration.cs" />
     <Compile Include="Interfaces\Configurations\ICsvConfiguration.cs" />
     <Compile Include="Interfaces\Configurations\ICsvFieldBuilderConfiguration.cs" />

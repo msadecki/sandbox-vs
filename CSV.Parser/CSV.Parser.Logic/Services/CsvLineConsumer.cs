@@ -17,7 +17,7 @@ namespace CSV.Parser.Logic.Services
             ITextWriterFactory textWriterFactory)
         {
             _outputConfiguration = outputConfiguration;
-            _textWriter = textWriterFactory.Create();
+            _textWriter = textWriterFactory.Create(outputConfiguration.OutputTarget);
         }
 
         public void Consume(ICsvLine csvLine)
