@@ -58,7 +58,6 @@
     <Compile Include="Interfaces\Services\ICsvLineConsumer.cs" />
     <Compile Include="Interfaces\Factories\ICsvLineConsumerFactory.cs" />
     <Compile Include="Interfaces\Factories\ICsvLineFactory.cs" />
-    <Compile Include="Interfaces\Services\ICsvLinesCache.cs" />
     <Compile Include="Interfaces\Services\ICachedCsvReader.cs" />
     <Compile Include="Interfaces\Services\ICsvStreamReader.cs" />
     <Compile Include="Interfaces\Factories\ICsvStreamReaderFactory.cs" />
