@@ -8,6 +8,7 @@ namespace CSV.Parser.Logic.Services
 {
     public class CsvFieldBuilder : ICsvFieldBuilder
     {
+        private readonly ICsvFieldBuilderConfiguration _csvFieldBuilderConfiguration;
         private readonly ICsvConfiguration _csvConfiguration;
         private readonly ICsvLineFactory _csvLineFactory;
         private readonly ICsvFieldFactory _csvFieldFactory;
@@ -30,15 +31,17 @@ namespace CSV.Parser.Logic.Services
         private int InitialEndOfLineLengthToMatch => _csvConfiguration.EndOfLine.Length;
 
         public CsvFieldBuilder(
+            ICsvFieldBuilderConfiguration csvFieldBuilderConfiguration,
             ICsvConfiguration csvConfiguration,
             ICsvLineFactory csvLineFactory,
             ICsvFieldFactory csvFieldFactory)
         {
+            _csvFieldBuilderConfiguration = csvFieldBuilderConfiguration;
             _csvConfiguration = csvConfiguration;
             _csvLineFactory = csvLineFactory;
             _csvFieldFactory = csvFieldFactory;
 
-            RawFieldBuilder = new StringBuilder(1024); // TODO: 1024 to ICsvConfiguration
+            RawFieldBuilder = new StringBuilder(csvFieldBuilderConfiguration.RawFieldBuilderCapacity);
 
             InitNewLine();
         }
@@ -52,7 +55,7 @@ namespace CSV.Parser.Logic.Services
 
         public void InitNewLine()
         {
-            CurrentCsvLine = _csvLineFactory.Create(128); // TODO: 128 to ICsvConfiguration
+            CurrentCsvLine = _csvLineFactory.Create(_csvFieldBuilderConfiguration.CsvLineFieldsCapacity);
             CreatedLinesCount++;
 
             InitNewField();

@@ -13,6 +13,11 @@ namespace CSV.Parser.Logic.Configurations
         public char Delimiter { get; } = ',';
 
         /// <summary>
+        /// '"'
+        /// </summary>
+        public char QuotationMark { get; } = '"';
+
+        /// <summary>
         /// CRLF
         /// "\r\n"
         /// Environment.NewLine 

@@ -4,6 +4,8 @@
     {
         char Delimiter { get; }
 
+        char QuotationMark { get; }
+
         string EndOfLine { get; }
     }
 }

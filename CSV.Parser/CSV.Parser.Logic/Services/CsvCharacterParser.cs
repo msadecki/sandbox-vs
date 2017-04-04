@@ -5,7 +5,7 @@ using CSV.Parser.Logic.Abstractions.Interfaces.Services;
 namespace CSV.Parser.Logic.Services
 {
     /// <summary>
-    /// TODO: Clean that comment and all others in solution.
+    /// TODO: Clean that comment and all others TODO's and comments in solution (move it to readme or "backlog").
     /// 
     /// http://stackoverflow.com/questions/9266747/writing-and-polishing-a-csv-parser
     /// Careful, this doesn't work for fields with embedded newlines, fields containing the delimiter as a literal, and quote-enclosed fields. – Corbin March Oct 17 '12 at 14:00
@@ -59,7 +59,7 @@ namespace CSV.Parser.Logic.Services
         {
             if (_csvFieldBuilder.RawFieldBuilderLength > 0)
             {
-                // TODO: Test the logic - "pl: czy nie pomija szukania nowej lini (e tym miejscu zawsze z reszty tworzy ostatnie pole - upeniæ siê, ¿e nie pominiêto czegoœ) itp."
+                // TODO: Test the logic - "pl: czy nie pomija szukania nowej lini (w tym miejscu zawsze z reszty tworzy ostatnie pole - upewniæ siê, ¿e nie pominiêto czegoœ) itp."
                 _csvFieldBuilder.BuildNewField(0);
 
                 _csvLineConsumer.Consume(_csvFieldBuilder.CurrentCsvLine);

@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configurations\BufferableReaderConfiguration.cs" />
+    <Compile Include="Configurations\CsvFieldBuilderConfiguration.cs" />
     <Compile Include="Configurations\EncodingConfiguration.cs" />
     <Compile Include="Configurations\OutputConfiguration.cs" />
     <Compile Include="Models\CsvField.cs" />

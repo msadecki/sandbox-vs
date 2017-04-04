@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Interfaces\Configurations\IBufferableReaderConfiguration.cs" />
     <Compile Include="Interfaces\Configurations\ICsvConfiguration.cs" />
+    <Compile Include="Interfaces\Configurations\ICsvFieldBuilderConfiguration.cs" />
     <Compile Include="Interfaces\Configurations\IEncodingConfiguration.cs" />
     <Compile Include="Interfaces\Configurations\IOutputConfiguration.cs" />
     <Compile Include="Interfaces\Services\IBufferableReader.cs" />

@@ -7,13 +7,16 @@ namespace CSV.Parser.Logic.Factories
 {
     public class CsvFieldBuilderFactory : ICsvFieldBuilderFactory
     {
+        private readonly ICsvFieldBuilderConfiguration _csvFieldBuilderConfiguration;
         private readonly ICsvLineFactory _csvLineFactory;
         private readonly ICsvFieldFactory _csvFieldFactory;
 
         public CsvFieldBuilderFactory(
+            ICsvFieldBuilderConfiguration csvFieldBuilderConfiguration,
             ICsvLineFactory csvLineFactory,
             ICsvFieldFactory csvFieldFactory)
         {
+            _csvFieldBuilderConfiguration = csvFieldBuilderConfiguration;
             _csvLineFactory = csvLineFactory;
             _csvFieldFactory = csvFieldFactory;
         }
@@ -21,6 +24,7 @@ namespace CSV.Parser.Logic.Factories
         public ICsvFieldBuilder Create(ICsvConfiguration csvConfiguration)
         {
             return new CsvFieldBuilder(
+                _csvFieldBuilderConfiguration,
                 csvConfiguration,
                 _csvLineFactory,
                 _csvFieldFactory);

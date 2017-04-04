@@ -9,10 +9,12 @@ namespace CSV.Parser.Logic.Factories
     {
         public ICsvStreamReader Create()
         {
+            // TODO: Consider using DI Container - Autofac or Castle
             return new CsvStreamReader(
                 new CsvCharacterParserFactory(
                     new CsvConfiguration(),
                     new CsvFieldBuilderFactory(
+                        new CsvFieldBuilderConfiguration(),
                         new CsvLineFactory(),
                         new CsvFieldFactory())),
                 new BufferableReaderFactory(
