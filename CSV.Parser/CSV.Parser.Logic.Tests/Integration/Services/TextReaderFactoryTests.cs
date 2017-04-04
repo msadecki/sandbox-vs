@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Text;
 using CSV.Parser.Logic.Abstractions.Interfaces.Configurations;
-using CSV.Parser.Logic.Abstractions.Interfaces.Services;
+using CSV.Parser.Logic.Abstractions.Interfaces.Factories;
 using CSV.Parser.Logic.Configurations;
-using CSV.Parser.Logic.Services;
+using CSV.Parser.Logic.Factories;
 using Xunit;
 
 namespace CSV.Parser.Logic.Tests.Integration.Services
@@ -44,6 +44,7 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
             yield return new object[] { @".\Integration\TestCases\Test.05.UTF16LE.BOM.txt", Encoding.Unicode };
             yield return new object[] { @".\Integration\TestCases\Test.06.ANSII.Windows-1250.No.BOM.txt", defaultEncoding };
             yield return new object[] { @".\Integration\TestCases\Test.07.UTF32.BOM.txt", Encoding.UTF32 };
+            yield return new object[] { @".\Integration\TestCases\Test.08.UTF8.BOM.EmptyLinesOnly.txt", Encoding.UTF8 };
         }
     }
 }

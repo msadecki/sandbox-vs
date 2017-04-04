@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CSV.Parser.Logic.Abstractions.Models
+namespace CSV.Parser.Logic.Abstractions.Interfaces.Models
 {
     public interface ICsvLine
     {

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using CSV.Parser.Logic.Configurations;
+using CSV.Parser.Logic.Factories;
 using CSV.Parser.Logic.Services;
 
 namespace CSV.Parser.App

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CSV.Parser.Logic.Abstractions.Interfaces.Services;
 using CSV.Parser.Logic.Configurations;
+using CSV.Parser.Logic.Factories;
 using CSV.Parser.Logic.Services;
 using Xunit;
 
@@ -43,6 +44,7 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
             yield return new object[] { @".\Integration\TestCases\Test.05.UTF16LE.BOM.txt", 8 };
             yield return new object[] { @".\Integration\TestCases\Test.06.ANSII.Windows-1250.No.BOM.txt", 8 };
             yield return new object[] { @".\Integration\TestCases\Test.07.UTF32.BOM.txt", 8 };
+            yield return new object[] { @".\Integration\TestCases\Test.08.UTF8.BOM.EmptyLinesOnly.txt", 4 };
         }
     }
 }

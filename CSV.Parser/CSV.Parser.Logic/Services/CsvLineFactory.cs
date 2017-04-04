@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using CSV.Parser.Logic.Abstractions.Interfaces.Services;
-using CSV.Parser.Logic.Abstractions.Models;
+using CSV.Parser.Logic.Abstractions.Interfaces.Factories;
+using CSV.Parser.Logic.Abstractions.Interfaces.Models;
 using CSV.Parser.Logic.Models;
 
 namespace CSV.Parser.Logic.Services

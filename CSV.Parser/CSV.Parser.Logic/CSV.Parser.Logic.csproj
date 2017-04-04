@@ -47,21 +47,25 @@
     <Compile Include="Models\CsvLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configurations\CsvConfiguration.cs" />
-    <Compile Include="Services\BufferableReaderFactory.cs" />
+    <Compile Include="Factories\BufferableReaderFactory.cs" />
     <Compile Include="Services\CachedCsvLineConsumer.cs" />
-    <Compile Include="Services\CachedCsvLineConsumerFactory.cs" />
+    <Compile Include="Factories\CachedCsvLineConsumerFactory.cs" />
+    <Compile Include="Services\CsvCharacterParser.cs" />
+    <Compile Include="Factories\CsvCharacterParserFactory.cs" />
+    <Compile Include="Factories\CsvFieldBuilderFactory.cs" />
     <Compile Include="Services\CsvFieldFactory.cs" />
+    <Compile Include="Services\CsvFieldBuilder.cs" />
     <Compile Include="Services\CsvLineConsumer.cs" />
-    <Compile Include="Services\CsvLineConsumerFactory.cs" />
+    <Compile Include="Factories\CsvLineConsumerFactory.cs" />
     <Compile Include="Services\CsvLineFactory.cs" />
     <Compile Include="Services\CachedCsvReader.cs" />
     <Compile Include="Services\CsvReader.cs" />
     <Compile Include="Services\CsvStreamReader.cs" />
-    <Compile Include="Services\CsvStreamReaderFactory.cs" />
+    <Compile Include="Factories\CsvStreamReaderFactory.cs" />
     <Compile Include="Services\CsvWriter.cs" />
     <Compile Include="Services\BufferableReader.cs" />
-    <Compile Include="Services\TextReaderFactory.cs" />
-    <Compile Include="Services\TextWriterFactory.cs" />
+    <Compile Include="Factories\TextReaderFactory.cs" />
+    <Compile Include="Factories\TextWriterFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CSV.Parser.Logic.Abstractions\CSV.Parser.Logic.Abstractions.csproj">

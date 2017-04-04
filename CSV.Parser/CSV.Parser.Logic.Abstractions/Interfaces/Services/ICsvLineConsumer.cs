@@ -1,5 +1,5 @@
 using System;
-using CSV.Parser.Logic.Abstractions.Models;
+using CSV.Parser.Logic.Abstractions.Interfaces.Models;
 
 namespace CSV.Parser.Logic.Abstractions.Interfaces.Services
 {
