@@ -48,7 +48,6 @@
     <Compile Include="Interfaces\Configurations\IOutputConfiguration.cs" />
     <Compile Include="Interfaces\Factories\ICsvFieldBuilderStateFactory.cs" />
     <Compile Include="Interfaces\Models\ICsvFieldBuilderState.cs" />
-    <Compile Include="Interfaces\Models\IReadOnlyCsvFieldBuilderState.cs" />
     <Compile Include="Interfaces\Services\IBufferableReader.cs" />
     <Compile Include="Interfaces\Factories\IBufferableReaderFactory.cs" />
     <Compile Include="Interfaces\Services\ICachedCsvLineConsumer.cs" />

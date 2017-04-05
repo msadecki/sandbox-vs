@@ -1,4 +1,5 @@
-﻿using CSV.Parser.Logic.Abstractions.Interfaces.Configurations;
+﻿using System.Text;
+using CSV.Parser.Logic.Abstractions.Interfaces.Configurations;
 using CSV.Parser.Logic.Abstractions.Interfaces.Factories;
 using CSV.Parser.Logic.Abstractions.Interfaces.Models;
 using CSV.Parser.Logic.Abstractions.Interfaces.Services;
@@ -12,8 +13,13 @@ namespace CSV.Parser.Logic.Services
         private readonly ICsvLineFactory _csvLineFactory;
         private readonly ICsvFieldFactory _csvFieldFactory;
         private readonly ICsvFieldBuilderState _state;
+        private readonly StringBuilder _rawFieldBuilder;
 
-        public IReadOnlyCsvFieldBuilderState State => _state.ReadOnlyState;
+        public int RawFieldBuilderLength => _rawFieldBuilder.Length;
+
+        public ICsvLine CurrentCsvLine { get; private set; }
+
+        public int CreatedLinesCount { get; private set; }
 
         public CsvFieldBuilder(
             ICsvConfiguration csvConfiguration,
@@ -26,8 +32,9 @@ namespace CSV.Parser.Logic.Services
             _csvFieldBuilderConfiguration = csvFieldBuilderConfiguration;
             _csvLineFactory = csvLineFactory;
             _csvFieldFactory = csvFieldFactory;
-
-            _state = csvFieldBuilderStateFactory.Create(csvFieldBuilderConfiguration);
+            _state = csvFieldBuilderStateFactory.Create();
+            _rawFieldBuilder = new StringBuilder(csvFieldBuilderConfiguration.RawFieldBuilderCapacity);
+            CreatedLinesCount = -1;
 
             InitNewLine();
         }
@@ -36,20 +43,21 @@ namespace CSV.Parser.Logic.Services
         {
             _state.CurrentCharacter = currentCharacter;
 
-            _state.RawFieldBuilder.Append(currentCharacter);
+            _rawFieldBuilder.Append(currentCharacter);
         }
 
         public void InitNewLine()
         {
-            _state.CurrentCsvLine = _csvLineFactory.Create(_csvFieldBuilderConfiguration.CsvLineFieldsCapacity);
-            _state.CreatedLinesCount++;
+            CurrentCsvLine = _csvLineFactory.Create(_csvFieldBuilderConfiguration.CsvLineFieldsCapacity);
+            CreatedLinesCount++;
 
             InitNewField();
         }
 
         public void InitNewField()
         {
-            _state.RawFieldBuilder.Clear();
+            _rawFieldBuilder.Clear();
+
             _state.EndOfLineLengthToMatch = _csvConfiguration.EndOfLineLength;
             _state.IsDelimiterSeekEnabled = true;
             _state.IsEndOfLineSeekEnabled = true;
@@ -84,9 +92,9 @@ namespace CSV.Parser.Logic.Services
 
         public void BuildNewField(int charactersToIgnoreCount)
         {
-            var fieldContent = _state.RawFieldBuilder.ToString(0, _state.RawFieldBuilder.Length - charactersToIgnoreCount);
+            var fieldContent = _rawFieldBuilder.ToString(0, _rawFieldBuilder.Length - charactersToIgnoreCount);
 
-            _state.CurrentCsvLine.Fields.Add(_csvFieldFactory.Create(fieldContent));
+            CurrentCsvLine.Fields.Add(_csvFieldFactory.Create(fieldContent));
         }
     }
 }

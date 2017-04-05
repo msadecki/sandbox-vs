@@ -51,23 +51,23 @@ namespace CSV.Parser.Logic.Services
             {
                 _csvFieldBuilder.BuildNewField(_csvConfiguration.EndOfLineLength);
 
-                _csvLineConsumer.Consume(_csvFieldBuilder.State.CurrentCsvLine);
+                _csvLineConsumer.Consume(_csvFieldBuilder.CurrentCsvLine);
                 _csvFieldBuilder.InitNewLine();
             }
         }
 
         public int ParseTail()
         {
-            if (_csvFieldBuilder.State.RawFieldBuilderLength > 0)
+            if (_csvFieldBuilder.RawFieldBuilderLength > 0)
             {
                 // TODO: Test the logic - "pl: czy nie pomija szukania nowej lini (w tym miejscu zawsze z reszty tworzy ostatnie pole - upewniæ siê, ¿e nie pominiêto czegoœ) itp."
                 _csvFieldBuilder.BuildNewField(0);
 
-                _csvLineConsumer.Consume(_csvFieldBuilder.State.CurrentCsvLine);
+                _csvLineConsumer.Consume(_csvFieldBuilder.CurrentCsvLine);
                 _csvFieldBuilder.InitNewLine();
             }
 
-            return _csvFieldBuilder.State.CreatedLinesCount;
+            return _csvFieldBuilder.CreatedLinesCount;
         }
     }
 }
