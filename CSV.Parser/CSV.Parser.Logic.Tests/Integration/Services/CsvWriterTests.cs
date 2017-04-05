@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using CSV.Parser.Logic.Abstractions.Interfaces.Models;
 using CSV.Parser.Logic.Abstractions.Interfaces.Services;
 using CSV.Parser.Logic.Configurations;
+using CSV.Parser.Logic.Factories;
+using CSV.Parser.Logic.Models;
 using CSV.Parser.Logic.Services;
 using Xunit;
 
@@ -10,29 +13,77 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
     {
         private readonly ICsvWriter _csvWriter = new CsvWriter(
             new CsvConfiguration(),
-            new EncodingConfiguration());
+            new TextWriterFactory(
+                new EncodingConfiguration()));
 
         [Fact]
         public void Write_Should_Write_To_Csv_File()
         {
             // Arrange
-            var filePath = @".\Integration\TestCases\Output.Write_Should_Write_To_Csv_File.csv";
-            var lines = new List<string[]>
+            IList<ICsvLine> csvLines = new List<ICsvLine>
             {
-                new [] {"H1.0", " H2 ", @"""H3""", "H4"},
-                
-                new [] {"V1.1", " V2 ", @"""V3""", "V4: [ąćęłńóśźż] [ĄĆĘŁŃÓŚŹŻ] "},
-                new [] {"V1.2", " V2 ", @"V3
--1,
--2,
-    ...
+                new CsvLine
+                {
+                    Fields = new List<ICsvField>
+                    {
+                        new CsvField { Content = "H1.1"},
+                        new CsvField { Content = " H2 "},
+                        new CsvField { Content = @"""H3"""},
+                        new CsvField { Content = "H4"}
+                    }
+                },
+                new CsvLine
+                {
+                    Fields = new List<ICsvField>
+                    {
+                        new CsvField { Content = "V2.1"},
+                        new CsvField { Content = " V2 "},
+                        new CsvField { Content = @"""V3"""},
+                        new CsvField { Content = "V4: [ąćęłńóśźż] [ĄĆĘŁŃÓŚŹŻ] "}
+                    }
+                },
+                new CsvLine
+                {
+                    Fields = new List<ICsvField>
+                    {
+                        new CsvField { Content = "V3.1"},
+                        new CsvField { Content = " V2 "},
+                        new CsvField { Content = @"V3
+                                                   -1,
+                                                   -2,
+                                                 ""...""
 
-", "V4"},
-                new [] {"V1.3", " V2 ", @"V3""", "V4"}
+                                                      "},
+                        new CsvField { Content = "V4" }
+                    }
+                },
+                new CsvLine
+                {
+                    Fields = new List<ICsvField>
+                    {
+                        new CsvField { Content = null},
+                        new CsvField { Content = string.Empty},
+                        new CsvField { Content = null},
+                        new CsvField { Content = null}
+                    }
+                },
+                new CsvLine
+                {
+                    Fields = new List<ICsvField>
+                    {
+                        new CsvField { Content = "V5.1"},
+                        new CsvField { Content = null},
+                        new CsvField { Content = @"V3"""},
+                        new CsvField { Content = "V4"}
+                    }
+                }
             };
 
-            // Act & Assert
-            _csvWriter.Write(filePath, false, lines);
+            // Act
+            _csvWriter.Write(csvLines);
+
+            // Assert
+            // TODO/TEMPORARY: Check manually & clean results (physical file written on disc)
         }
     }
 }

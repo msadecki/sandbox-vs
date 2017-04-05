@@ -83,7 +83,7 @@
     <Compile Include="Integration\Services\CsvReaderTests.cs" />
     <Compile Include="Integration\Services\CachedCsvReaderTests.cs" />
     <Compile Include="Integration\Services\CsvWriterTests.cs" />
-    <Compile Include="Integration\Services\TextReaderFactoryTests.cs" />
+    <Compile Include="Integration\Factories\TextReaderFactoryTests.cs" />
     <Compile Include="Unit\UnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -104,31 +104,55 @@
     <Folder Include="Unit\Sevices\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Integration\TestCases\Test.00.UTF8.No.BOM.txt">
+    <Content Include="Integration\TestCases\CsvReader\CSV.01.UTF8.No.BOM.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Integration\TestCases\Test.08.UTF8.BOM.EmptyLinesOnly.txt">
+    <Content Include="Integration\TestCases\CsvReader\CSV.08.UTF8.BOM.EmptyLinesOnly.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Integration\TestCases\Test.01.UTF8.BOM.txt">
+    <Content Include="Integration\TestCases\CsvReader\CSV.02.UTF8.BOM.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Integration\TestCases\Test.07.UTF32.BOM.txt">
+    <Content Include="Integration\TestCases\CsvReader\CSV.07.UTF32.BOM.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Integration\TestCases\Test.05.UTF16LE.BOM.txt">
+    <Content Include="Integration\TestCases\CsvReader\CSV.06.UTF16LE.BOM.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Integration\TestCases\Test.04.UTF16BE.BOM.txt">
+    <Content Include="Integration\TestCases\CsvReader\CSV.05.UTF16BE.BOM.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Integration\TestCases\Test.03.Empty.No.BOM.txt">
+    <Content Include="Integration\TestCases\CsvReader\CSV.04.Empty.No.BOM.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Integration\TestCases\Test.02.UTF8.BOM.FieldWithCrLf.txt">
+    <Content Include="Integration\TestCases\CsvReader\CSV.03.UTF8.BOM.FieldWithCrLf.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Integration\TestCases\Test.06.ANSII.Windows-1250.No.BOM.txt">
+    <Content Include="Integration\TestCases\TextReaderFactory\TRF.01.UTF8.No.BOM.2.Lines.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\TextReaderFactory\TRF.02.UTF8.BOM.2.Lines.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\TextReaderFactory\TRF.07.No.BOM.Empty.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\TextReaderFactory\TRF.03.UTF16BE.BOM.2.Lines.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\TextReaderFactory\TRF.04.UTF16LE.BOM.2.Lines.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\TextReaderFactory\TRF.09.ANSII.Windows-1250.No.BOM.2.Lines.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\TextReaderFactory\TRF.05.UTF32.BOM.2.Lines.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\TextReaderFactory\TRF.06.UTF8.BOM.Empty.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\TextReaderFactory\TRF.08.UTF8.BOM.4.CRLF.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

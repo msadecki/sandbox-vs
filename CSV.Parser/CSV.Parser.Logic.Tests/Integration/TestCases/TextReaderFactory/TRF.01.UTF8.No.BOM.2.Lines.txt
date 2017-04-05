@@ -1,0 +1,2 @@
+"Polish Accented Characters: [ąćęłńóśźż], [ĄĆĘŁŃÓŚŹŻ]"
+Second Line

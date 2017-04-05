@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Text;
 using CSV.Parser.Logic.Abstractions.Interfaces.Configurations;
@@ -8,7 +7,7 @@ using CSV.Parser.Logic.Abstractions.Interfaces.Services;
 
 namespace CSV.Parser.Logic.Services
 {
-    public class CsvLineConsumer : ICsvLineConsumer
+    public sealed class CsvLineConsumer : ICsvLineConsumer
     {
         private readonly IOutputConfiguration _outputConfiguration;
         private readonly TextWriter _textWriter;
@@ -49,10 +48,9 @@ namespace CSV.Parser.Logic.Services
         public void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (disposing)
             {

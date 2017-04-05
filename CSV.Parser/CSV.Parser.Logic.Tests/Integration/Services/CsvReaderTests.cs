@@ -36,15 +36,14 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
 
         private static IEnumerable<object[]> GetTestCases()
         {
-            yield return new object[] { @".\Integration\TestCases\Test.00.UTF8.No.BOM.txt", 8 };
-            yield return new object[] { @".\Integration\TestCases\Test.01.UTF8.BOM.txt", 8 };
-            yield return new object[] { @".\Integration\TestCases\Test.02.UTF8.BOM.FieldWithCrLf.txt", 8 };
-            yield return new object[] { @".\Integration\TestCases\Test.03.Empty.No.BOM.txt", 0 };
-            yield return new object[] { @".\Integration\TestCases\Test.04.UTF16BE.BOM.txt", 8 };
-            yield return new object[] { @".\Integration\TestCases\Test.05.UTF16LE.BOM.txt", 8 };
-            yield return new object[] { @".\Integration\TestCases\Test.06.ANSII.Windows-1250.No.BOM.txt", 8 };
-            yield return new object[] { @".\Integration\TestCases\Test.07.UTF32.BOM.txt", 8 };
-            yield return new object[] { @".\Integration\TestCases\Test.08.UTF8.BOM.EmptyLinesOnly.txt", 4 };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.01.UTF8.No.BOM.txt", 8 };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.02.UTF8.BOM.txt", 8 };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.03.UTF8.BOM.FieldWithCrLf.txt", 5 };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.04.Empty.No.BOM.txt", 0 };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.05.UTF16BE.BOM.txt", 8 };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.06.UTF16LE.BOM.txt", 8 };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.07.UTF32.BOM.txt", 8 };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.08.UTF8.BOM.EmptyLinesOnly.txt", 4 };
         }
     }
 }

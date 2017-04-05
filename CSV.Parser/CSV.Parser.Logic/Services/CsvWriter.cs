@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Text;
+using CSV.Parser.Logic.Abstractions.Enums;
 using CSV.Parser.Logic.Abstractions.Interfaces.Configurations;
+using CSV.Parser.Logic.Abstractions.Interfaces.Factories;
+using CSV.Parser.Logic.Abstractions.Interfaces.Models;
 using CSV.Parser.Logic.Abstractions.Interfaces.Services;
 
 namespace CSV.Parser.Logic.Services
@@ -9,36 +11,52 @@ namespace CSV.Parser.Logic.Services
     public class CsvWriter : ICsvWriter
     {
         private readonly ICsvConfiguration _csvConfiguration;
-        private readonly IEncodingConfiguration _encodingConfiguration;
+        private readonly ITextWriterFactory _textWriterFactory;
 
         public CsvWriter(
             ICsvConfiguration csvConfiguration,
-            IEncodingConfiguration encodingConfiguration)
+            ITextWriterFactory textWriterFactory)
         {
             _csvConfiguration = csvConfiguration;
-            _encodingConfiguration = encodingConfiguration;
+            _textWriterFactory = textWriterFactory;
         }
 
-        // TODO: Consider remove/refactor. This class/method is not finished and it is not part of coding exercise.
-        public void Write(string filePath, bool append, IEnumerable<string[]> lines)
+        // TODO/REMARKS: This class/method is not part of coding exercise but it can be usefull to generate some test csv files.
+        public void Write(IEnumerable<ICsvLine> csvLines)
         {
-            using (var writer = new StreamWriter(filePath, append, _encodingConfiguration.FileOutputEncoding))
+            using (var textWriter = _textWriterFactory.Create(OutputTarget.File))
             {
-                foreach (var line in lines)
-                {
-                    var outputLine = new StringBuilder();
+                var oneQuotationMark = _csvConfiguration.QuotationMark.ToString();
+                var twoQuotationMarks = string.Concat(_csvConfiguration.QuotationMark, _csvConfiguration.QuotationMark);
 
-                    foreach (var field in line)
+                StringBuilder outputLine = null;
+
+                foreach (var csvLine in csvLines)
+                {
+                    if (outputLine == null)
                     {
-                        outputLine.Append(field);
+                        outputLine = new StringBuilder();
+                    }
+                    else
+                    {
+                        outputLine.Clear();
+                        textWriter.Write(_csvConfiguration.EndOfLine);
+                    }
+
+                    foreach (var csvField in csvLine.Fields)
+                    {
+                        if (csvField.Content != null)
+                        {
+                            outputLine.Append(_csvConfiguration.QuotationMark);
+                            outputLine.Append(csvField.Content.Replace(oneQuotationMark, twoQuotationMarks));
+                            outputLine.Append(_csvConfiguration.QuotationMark);
+                        }
                         outputLine.Append(_csvConfiguration.Delimiter);
                     }
 
-                    writer.Write(outputLine.Length > 0
-                        ? outputLine.ToString(0, outputLine.Length - 1)
+                    textWriter.Write(outputLine.Length > 0
+                        ? outputLine.ToString(0, outputLine.Length - _csvConfiguration.DelimiterLenght)
                         : string.Empty);
-
-                    writer.Write(_csvConfiguration.EndOfLine);
                 }
             }
         }

@@ -4,7 +4,7 @@ namespace CSV.Parser.Logic.Abstractions.Interfaces.Configurations
 {
     public interface IEncodingConfiguration
     {
-        Encoding DefaultInputEncoding { get; }
+        Encoding DefaultFileInputEncoding { get; }
 
         Encoding ConsoleOutputEncoding { get; }
 

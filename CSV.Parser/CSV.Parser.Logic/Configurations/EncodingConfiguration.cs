@@ -5,7 +5,7 @@ namespace CSV.Parser.Logic.Configurations
 {
     public class EncodingConfiguration : IEncodingConfiguration
     {
-        public Encoding DefaultInputEncoding { get; } = Encoding.UTF8;
+        public Encoding DefaultFileInputEncoding { get; } = Encoding.UTF8;
 
         /// <summary>
         /// Encoding examples without BOM:

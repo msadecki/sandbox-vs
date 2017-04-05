@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using CSV.Parser.Logic.Abstractions.Enums;
 using CSV.Parser.Logic.Abstractions.Interfaces.Configurations;
@@ -39,8 +40,19 @@ namespace CSV.Parser.Logic.Factories
 
         private StreamWriter CreateFileStreamWriter()
         {
-            var filePath = "./TODO.Some.Safe.Place.To.Write.File.And.UniqueTimestamp.txt";
+            var filePath = GetFilePath();
             return new StreamWriter(filePath, false, _encodingConfiguration.FileOutputEncoding);
+        }
+
+        private string GetFilePath()
+        {
+            // TODO: Change to some safe place to write output file and add some unique {Guid.NewGuid():N} or timestamp.
+            var frame = new StackTrace().GetFrame(3);
+            var method = frame?.GetMethod();
+            var methodName = method?.Name;
+            var methodsClass = method?.DeclaringType;
+
+            return $"./_.{methodsClass}.{methodName}.Output.csv";
         }
     }
 }
