@@ -7,5 +7,9 @@
         char QuotationMark { get; }
 
         string EndOfLine { get; }
+
+        int DelimiterLenght { get; }
+
+        int EndOfLineLength { get; }
     }
 }

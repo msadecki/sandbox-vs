@@ -4,11 +4,7 @@ namespace CSV.Parser.Logic.Abstractions.Interfaces.Services
 {
     public interface ICsvFieldBuilder
     {
-        ICsvLine CurrentCsvLine { get; }
-
-        int RawFieldBuilderLength { get; }
-
-        int CreatedLinesCount { get; }
+        IReadOnlyCsvFieldBuilderState State { get; }
 
         void Append(char currentCharacter);
 

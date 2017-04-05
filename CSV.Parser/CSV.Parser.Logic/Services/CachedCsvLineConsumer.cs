@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CSV.Parser.Logic.Abstractions.Interfaces.Models;
 using CSV.Parser.Logic.Abstractions.Interfaces.Services;
@@ -16,6 +17,12 @@ namespace CSV.Parser.Logic.Services
         }
 
         public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
         }
     }

@@ -19,6 +19,7 @@ namespace CSV.Parser.Logic.Services
             _encodingConfiguration = encodingConfiguration;
         }
 
+        // TODO: Consider remove/refactor. This class/method is not finished and it is not part of coding exercise.
         public void Write(string filePath, bool append, IEnumerable<string[]> lines)
         {
             using (var writer = new StreamWriter(filePath, append, _encodingConfiguration.FileOutputEncoding))

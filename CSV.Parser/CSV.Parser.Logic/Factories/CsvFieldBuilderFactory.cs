@@ -10,24 +10,28 @@ namespace CSV.Parser.Logic.Factories
         private readonly ICsvFieldBuilderConfiguration _csvFieldBuilderConfiguration;
         private readonly ICsvLineFactory _csvLineFactory;
         private readonly ICsvFieldFactory _csvFieldFactory;
+        private readonly ICsvFieldBuilderStateFactory _csvFieldBuilderStateFactory;
 
         public CsvFieldBuilderFactory(
             ICsvFieldBuilderConfiguration csvFieldBuilderConfiguration,
             ICsvLineFactory csvLineFactory,
-            ICsvFieldFactory csvFieldFactory)
+            ICsvFieldFactory csvFieldFactory,
+            ICsvFieldBuilderStateFactory csvFieldBuilderStateFactory)
         {
             _csvFieldBuilderConfiguration = csvFieldBuilderConfiguration;
             _csvLineFactory = csvLineFactory;
             _csvFieldFactory = csvFieldFactory;
+            _csvFieldBuilderStateFactory = csvFieldBuilderStateFactory;
         }
 
         public ICsvFieldBuilder Create(ICsvConfiguration csvConfiguration)
         {
             return new CsvFieldBuilder(
-                _csvFieldBuilderConfiguration,
                 csvConfiguration,
+                _csvFieldBuilderConfiguration,
                 _csvLineFactory,
-                _csvFieldFactory);
+                _csvFieldFactory,
+                _csvFieldBuilderStateFactory);
         }
     }
 }

@@ -6,6 +6,7 @@ namespace CSV.Parser.Logic.Services
 {
     /// <summary>
     /// TODO: Clean that comment and all others TODO's and comments in solution (move it to readme or "backlog").
+    /// TODO: Clean R# code issues
     /// 
     /// http://stackoverflow.com/questions/9266747/writing-and-polishing-a-csv-parser
     /// Careful, this doesn't work for fields with embedded newlines, fields containing the delimiter as a literal, and quote-enclosed fields. – Corbin March Oct 17 '12 at 14:00
@@ -40,7 +41,7 @@ namespace CSV.Parser.Logic.Services
 
             if (_csvFieldBuilder.IsDelimiterMatched())
             {
-                _csvFieldBuilder.BuildNewField(1);
+                _csvFieldBuilder.BuildNewField(_csvConfiguration.DelimiterLenght);
                 _csvFieldBuilder.InitNewField();
             }
 
@@ -48,25 +49,25 @@ namespace CSV.Parser.Logic.Services
 
             if (_csvFieldBuilder.IsEndOfLineMatched())
             {
-                _csvFieldBuilder.BuildNewField(_csvConfiguration.EndOfLine.Length);
+                _csvFieldBuilder.BuildNewField(_csvConfiguration.EndOfLineLength);
 
-                _csvLineConsumer.Consume(_csvFieldBuilder.CurrentCsvLine);
+                _csvLineConsumer.Consume(_csvFieldBuilder.State.CurrentCsvLine);
                 _csvFieldBuilder.InitNewLine();
             }
         }
 
         public int ParseTail()
         {
-            if (_csvFieldBuilder.RawFieldBuilderLength > 0)
+            if (_csvFieldBuilder.State.RawFieldBuilderLength > 0)
             {
                 // TODO: Test the logic - "pl: czy nie pomija szukania nowej lini (w tym miejscu zawsze z reszty tworzy ostatnie pole - upewniæ siê, ¿e nie pominiêto czegoœ) itp."
                 _csvFieldBuilder.BuildNewField(0);
 
-                _csvLineConsumer.Consume(_csvFieldBuilder.CurrentCsvLine);
+                _csvLineConsumer.Consume(_csvFieldBuilder.State.CurrentCsvLine);
                 _csvFieldBuilder.InitNewLine();
             }
 
-            return _csvFieldBuilder.CreatedLinesCount;
+            return _csvFieldBuilder.State.CreatedLinesCount;
         }
     }
 }

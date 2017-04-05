@@ -16,7 +16,8 @@ namespace CSV.Parser.Logic.Factories
                     new CsvFieldBuilderFactory(
                         new CsvFieldBuilderConfiguration(),
                         new CsvLineFactory(),
-                        new CsvFieldFactory())),
+                        new CsvFieldFactory(),
+                        new CsvFieldBuilderStateFactory())),
                 new BufferableReaderFactory(
                     new BufferableReaderConfiguration()));
         }

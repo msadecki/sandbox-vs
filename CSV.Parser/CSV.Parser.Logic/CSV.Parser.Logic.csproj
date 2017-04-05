@@ -44,6 +44,7 @@
     <Compile Include="Configurations\CsvFieldBuilderConfiguration.cs" />
     <Compile Include="Configurations\EncodingConfiguration.cs" />
     <Compile Include="Configurations\OutputConfiguration.cs" />
+    <Compile Include="Factories\CsvFieldBuilderStateFactory.cs" />
     <Compile Include="Models\CsvField.cs" />
     <Compile Include="Models\CsvLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Services\CsvCharacterParser.cs" />
     <Compile Include="Factories\CsvCharacterParserFactory.cs" />
     <Compile Include="Factories\CsvFieldBuilderFactory.cs" />
+    <Compile Include="Models\CsvFieldBuilderState.cs" />
     <Compile Include="Services\CsvFieldFactory.cs" />
     <Compile Include="Services\CsvFieldBuilder.cs" />
     <Compile Include="Services\CsvLineConsumer.cs" />

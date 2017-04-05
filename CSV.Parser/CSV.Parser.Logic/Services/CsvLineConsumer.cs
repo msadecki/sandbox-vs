@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Text;
 using CSV.Parser.Logic.Abstractions.Interfaces.Configurations;
@@ -47,7 +48,16 @@ namespace CSV.Parser.Logic.Services
 
         public void Dispose()
         {
-            _textWriter?.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _textWriter?.Dispose();
+            }
         }
     }
 }

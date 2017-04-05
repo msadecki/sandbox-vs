@@ -1,5 +1,4 @@
-﻿using System.Text;
-using CSV.Parser.Logic.Abstractions.Interfaces.Configurations;
+﻿using CSV.Parser.Logic.Abstractions.Interfaces.Configurations;
 using CSV.Parser.Logic.Abstractions.Interfaces.Factories;
 using CSV.Parser.Logic.Abstractions.Interfaces.Models;
 using CSV.Parser.Logic.Abstractions.Interfaces.Services;
@@ -8,97 +7,86 @@ namespace CSV.Parser.Logic.Services
 {
     public class CsvFieldBuilder : ICsvFieldBuilder
     {
-        private readonly ICsvFieldBuilderConfiguration _csvFieldBuilderConfiguration;
         private readonly ICsvConfiguration _csvConfiguration;
+        private readonly ICsvFieldBuilderConfiguration _csvFieldBuilderConfiguration;
         private readonly ICsvLineFactory _csvLineFactory;
         private readonly ICsvFieldFactory _csvFieldFactory;
-        private char _currentCharacter;
+        private readonly ICsvFieldBuilderState _state;
 
-        public ICsvLine CurrentCsvLine { get; private set; }
-
-        public int RawFieldBuilderLength => RawFieldBuilder.Length;
-
-        public int CreatedLinesCount { get; private set; } = -1;
-
-        private StringBuilder RawFieldBuilder { get; }
-
-        private int EndOfLineLengthToMatch { get; set; }
-
-        private bool IsDelimiterSeekEnabled { get; set; }
-
-        private bool IsEndOfLineSeekEnabled { get; set; }
-
-        private int InitialEndOfLineLengthToMatch => _csvConfiguration.EndOfLine.Length;
+        public IReadOnlyCsvFieldBuilderState State => _state.ReadOnlyState;
 
         public CsvFieldBuilder(
-            ICsvFieldBuilderConfiguration csvFieldBuilderConfiguration,
             ICsvConfiguration csvConfiguration,
+            ICsvFieldBuilderConfiguration csvFieldBuilderConfiguration,
             ICsvLineFactory csvLineFactory,
-            ICsvFieldFactory csvFieldFactory)
+            ICsvFieldFactory csvFieldFactory,
+            ICsvFieldBuilderStateFactory csvFieldBuilderStateFactory)
         {
-            _csvFieldBuilderConfiguration = csvFieldBuilderConfiguration;
             _csvConfiguration = csvConfiguration;
+            _csvFieldBuilderConfiguration = csvFieldBuilderConfiguration;
             _csvLineFactory = csvLineFactory;
             _csvFieldFactory = csvFieldFactory;
 
-            RawFieldBuilder = new StringBuilder(csvFieldBuilderConfiguration.RawFieldBuilderCapacity);
+            _state = csvFieldBuilderStateFactory.Create(csvFieldBuilderConfiguration);
 
             InitNewLine();
         }
 
         public void Append(char currentCharacter)
         {
-            _currentCharacter = currentCharacter;
+            _state.CurrentCharacter = currentCharacter;
 
-            RawFieldBuilder.Append(currentCharacter);
+            _state.RawFieldBuilder.Append(currentCharacter);
         }
 
         public void InitNewLine()
         {
-            CurrentCsvLine = _csvLineFactory.Create(_csvFieldBuilderConfiguration.CsvLineFieldsCapacity);
-            CreatedLinesCount++;
+            _state.CurrentCsvLine = _csvLineFactory.Create(_csvFieldBuilderConfiguration.CsvLineFieldsCapacity);
+            _state.CreatedLinesCount++;
 
             InitNewField();
         }
 
         public void InitNewField()
         {
-            RawFieldBuilder.Clear();
-            EndOfLineLengthToMatch = InitialEndOfLineLengthToMatch;
-            IsDelimiterSeekEnabled = true;
-            IsEndOfLineSeekEnabled = true;
+            _state.RawFieldBuilder.Clear();
+            _state.EndOfLineLengthToMatch = _csvConfiguration.EndOfLineLength;
+            _state.IsDelimiterSeekEnabled = true;
+            _state.IsEndOfLineSeekEnabled = true;
+            _state.IsQuotationMarkStartFieldSeekEnabled = true;
+            _state.IsQuotationMarkEndFieldSeekEnabled = false;
         }
 
         public bool IsDelimiterMatched()
         {
-            return IsDelimiterSeekEnabled && _currentCharacter == _csvConfiguration.Delimiter;
+            return _state.IsDelimiterSeekEnabled && _state.CurrentCharacter == _csvConfiguration.Delimiter;
         }
 
         public bool IsEndOfLineMatched()
         {
-            return EndOfLineLengthToMatch == 0;
+            return _state.EndOfLineLengthToMatch == 0;
         }
 
         public void EnsureEndOfLineLengthToMatch()
         {
-            if (IsEndOfLineSeekEnabled && EndOfLineLengthToMatch > 0)
+            if (_state.IsEndOfLineSeekEnabled && _state.EndOfLineLengthToMatch > 0)
             {
-                if (_currentCharacter == _csvConfiguration.EndOfLine[InitialEndOfLineLengthToMatch - EndOfLineLengthToMatch])
+                if (_state.CurrentCharacter == _csvConfiguration.EndOfLine[_csvConfiguration.EndOfLineLength - _state.EndOfLineLengthToMatch])
                 {
-                    EndOfLineLengthToMatch--;
+                    _state.EndOfLineLengthToMatch--;
                 }
-                else if (EndOfLineLengthToMatch != InitialEndOfLineLengthToMatch)
+                else if (_state.EndOfLineLengthToMatch != _csvConfiguration.EndOfLineLength)
                 {
-                    EndOfLineLengthToMatch = InitialEndOfLineLengthToMatch;
+                    _state.EndOfLineLengthToMatch = _csvConfiguration.EndOfLineLength;
                 }
             }
         }
 
         public void BuildNewField(int charactersToIgnoreCount)
         {
-            var fieldContent = RawFieldBuilder.ToString(0, RawFieldBuilder.Length - charactersToIgnoreCount);
+            var fieldContent = _state.RawFieldBuilder.ToString(0, _state.RawFieldBuilder.Length - charactersToIgnoreCount);
 
-            CurrentCsvLine.Fields.Add(_csvFieldFactory.Create(fieldContent));
+            _state.CurrentCsvLine.Fields.Add(_csvFieldFactory.Create(fieldContent));
         }
     }
 }

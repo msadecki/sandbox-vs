@@ -23,5 +23,9 @@ namespace CSV.Parser.Logic.Configurations
         /// Environment.NewLine 
         /// </summary>
         public string EndOfLine { get; } = "\r\n";
+
+        public int DelimiterLenght { get; } = 1;
+
+        public int EndOfLineLength => EndOfLine.Length;
     }
 }
