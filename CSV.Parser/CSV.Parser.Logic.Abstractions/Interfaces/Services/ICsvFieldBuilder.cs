@@ -12,7 +12,7 @@ namespace CSV.Parser.Logic.Abstractions.Interfaces.Services
 
         ICsvLine CurrentCsvLine { get; }
 
-        int CreatedLinesCount { get; }
+        int CurrentCsvLineIndex { get; }
 
         void InitNewLine();
 
@@ -21,6 +21,8 @@ namespace CSV.Parser.Logic.Abstractions.Interfaces.Services
         bool Append(char character);
 
         void EnsureEndOfLineLengthToMatch();
+
+        void EnsureLastAppendantCharacterIsNotDelimiter();
 
         void BuildNewFieldAfterDelimiter();
 

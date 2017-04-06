@@ -10,9 +10,9 @@ namespace CSV.Parser.Logic.Configurations
 
         public string EndOfLine { get; } = "\r\n";
 
-        public int DelimiterLenght { get; } = 1;
+        public int DelimiterLength { get; } = 1;
 
-        public int QuotationMarkLenght { get; } = 1;
+        public int QuotationMarkLength { get; } = 1;
 
         public int EndOfLineLength { get; } = 2;
     }

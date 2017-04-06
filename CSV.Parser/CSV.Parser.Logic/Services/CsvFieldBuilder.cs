@@ -24,7 +24,7 @@ namespace CSV.Parser.Logic.Services
 
         public ICsvLine CurrentCsvLine { get; private set; }
 
-        public int CreatedLinesCount { get; private set; }
+        public int CurrentCsvLineIndex { get; private set; }
 
         public CsvFieldBuilder(
             ICsvConfiguration csvConfiguration,
@@ -41,13 +41,25 @@ namespace CSV.Parser.Logic.Services
             _rawFieldBuilder = new StringBuilder(csvFieldBuilderConfiguration.RawFieldBuilderCapacity);
 
             CurrentCsvLine = _csvLineFactory.Create(_csvFieldBuilderConfiguration.CsvLineFieldsCapacity);
+
             ClearState();
+            _state.FieldsCount = null;
+            _state.AppendantCharacter = null;
         }
 
         public void InitNewLine()
         {
+            if (_state.FieldsCount == null)
+            {
+                _state.FieldsCount = CurrentCsvLine.Fields.Count;
+            }
+            else if (_state.FieldsCount != CurrentCsvLine.Fields.Count)
+            {
+                throw CreateCsvInvalidFormatException("Each line should contain the same number of fields throughout the file.");
+            }
+
             CurrentCsvLine = _csvLineFactory.Create(_csvFieldBuilderConfiguration.CsvLineFieldsCapacity);
-            CreatedLinesCount++;
+            CurrentCsvLineIndex++;
 
             InitNewField();
         }
@@ -61,11 +73,13 @@ namespace CSV.Parser.Logic.Services
 
         public bool Append(char character)
         {
+            _state.AppendantCharacter = character;
+
             if (character == _csvConfiguration.QuotationMark)
             {
                 if (_state.IsDelimiterOrEndOfLineRequired)
                 {
-                    throw new CsvInvalidFormatException($"Only delimiter or new line is expected. {GetPosition()}");
+                    throw CreateCsvInvalidFormatException("Only delimiter or new line is allowed.");
                 }
 
                 if (_state.IsQuotationMarkFirstInField)
@@ -85,10 +99,14 @@ namespace CSV.Parser.Logic.Services
 
                     return false;
                 }
+                else
+                {
+                    throw CreateCsvInvalidFormatException("Quotation mark is not allowed inside a field that is not enclosed with quotation mark.");
+                }
             }
             else if (_state.CurrentCharacter == _csvConfiguration.QuotationMark)
             {
-                _rawFieldBuilder.Remove(RawFieldBuilderLength - _csvConfiguration.QuotationMarkLenght, _csvConfiguration.QuotationMarkLenght);
+                _rawFieldBuilder.Remove(RawFieldBuilderLength - _csvConfiguration.QuotationMarkLength, _csvConfiguration.QuotationMarkLength);
 
                 _state.IsDelimiterSeekEnabled = true;
                 _state.IsEndOfLineSeekEnabled = true;
@@ -112,7 +130,7 @@ namespace CSV.Parser.Logic.Services
                 }
                 else if (_state.IsDelimiterOrEndOfLineRequired)
                 {
-                    throw new CsvInvalidFormatException($"Only delimiter or new line is expected. {GetPosition()}");
+                    throw CreateCsvInvalidFormatException("Only delimiter or new line is allowed.");
                 }
                 else if (_state.EndOfLineLengthToMatch != _csvConfiguration.EndOfLineLength)
                 {
@@ -121,9 +139,17 @@ namespace CSV.Parser.Logic.Services
             }
         }
 
+        public void EnsureLastAppendantCharacterIsNotDelimiter()
+        {
+            if (_state.AppendantCharacter == _csvConfiguration.Delimiter)
+            {
+                throw CreateCsvInvalidFormatException("The last field in the last line must not be followed by a delimiter only.");
+            }
+        }
+
         public void BuildNewFieldAfterDelimiter()
         {
-            BuildNewField(_csvConfiguration.DelimiterLenght);
+            BuildNewField(_csvConfiguration.DelimiterLength);
         }
 
         public void BuildNewFieldAfterEndOfLine()
@@ -153,20 +179,25 @@ namespace CSV.Parser.Logic.Services
             _state.IsDelimiterOrEndOfLineRequired = false;
         }
 
+        private CsvInvalidFormatException CreateCsvInvalidFormatException(string message)
+        {
+            return new CsvInvalidFormatException($"{message} {GetPosition()}");
+        }
+
         private string GetPosition()
         {
             return GetPosition(
-                CreatedLinesCount,
+                CurrentCsvLineIndex + 1,
                 CurrentCsvLine.Fields.Count,
                 RawFieldBuilderLength);
         }
 
         private static string GetPosition(
-            int lineIndex,
-            int fieldIndex,
-            int fieldContentIndex)
+            int line,
+            int field,
+            int fieldContentLength)
         {
-            return $"{{ LineIndex: {lineIndex}, FieldIndex: {fieldIndex}, FieldContentIndex: {fieldContentIndex} }}";
+            return $"{{ Line: {line}, Field: {field}, FieldContentLength: {fieldContentLength} }}";
         }
     }
 }

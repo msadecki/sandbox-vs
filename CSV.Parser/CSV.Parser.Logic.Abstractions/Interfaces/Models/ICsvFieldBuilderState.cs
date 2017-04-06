@@ -2,6 +2,10 @@
 {
     public interface ICsvFieldBuilderState
     {
+        int? FieldsCount { get; set; }
+
+        char? AppendantCharacter { get; set; }
+
         char? CurrentCharacter { get; set; }
 
         int EndOfLineLengthToMatch { get; set; }

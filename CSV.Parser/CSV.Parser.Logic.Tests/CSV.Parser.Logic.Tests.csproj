@@ -114,7 +114,7 @@
     <Content Include="Integration\TestCases\CsvReader\CSV.13.UTF8.BOM.QuotationMark.Invalid.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Integration\TestCases\CsvReader\CSV.12.UTF8.BOM.LastComma.Invalid.txt">
+    <Content Include="Integration\TestCases\CsvReader\CSV.12.UTF8.BOM.LastDelimiter.Invalid.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Integration\TestCases\CsvReader\CSV.10.UTF8.BOM.LastDelimiter.txt">

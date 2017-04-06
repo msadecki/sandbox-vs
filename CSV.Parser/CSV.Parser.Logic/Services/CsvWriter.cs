@@ -66,7 +66,7 @@ namespace CSV.Parser.Logic.Services
                     }
 
                     textWriter.Write(lineBuilder.Length > 0
-                        ? lineBuilder.ToString(0, lineBuilder.Length - _csvConfiguration.DelimiterLenght)
+                        ? lineBuilder.ToString(0, lineBuilder.Length - _csvConfiguration.DelimiterLength)
                         : string.Empty);
                 }
 

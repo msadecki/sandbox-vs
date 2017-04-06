@@ -8,9 +8,9 @@
 
         string EndOfLine { get; }
 
-        int DelimiterLenght { get; }
+        int DelimiterLength { get; }
 
-        int QuotationMarkLenght { get; }
+        int QuotationMarkLength { get; }
 
         int EndOfLineLength { get; }
     }

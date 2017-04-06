@@ -22,24 +22,16 @@
 ## Remarks / TODO
 
 ### CsvWriter
-* It is not part of coding exercise but it can be usefull to generate some test csv files.
+* REMARKS: It is not part of coding exercise but it can be usefull to generate some test csv files.
 
 ### TextWriterFactory
-* GetFilePath - Change to some safe place to write output file and add some unique {Guid.NewGuid():N} or timestamp.
+* REMARKS: GetFilePath - Change to some safe place to write output file and add some unique {Guid.NewGuid():N} or timestamp.
 
 ### CsvStreamReaderFactory and others
-* Consider using DI Container - Autofac or Castle
-
-### CsvCharacterParser - REMARKS TO VERIFY
-* REMARKS: Empty lines should not be ignored (TODO: How to count lines in 1 column CSV - if all fields are empty then ..., if some are nonempty then ... ?)
-* REMARKS: First line should determine fields count - use it to validate all other lines (use exception throwing or some validation result)
-* REMARKS: ParseTail - Verify that it always works correctly. See doc "The last field in the record must not be followed by a comma").
-
-### CsvFieldBuilder
-* TODO: InitNewLine - Check fields count with first line on every InitNewLine (CSV.14.UTF8.BOM.FieldsCount.Invalid.txt, ...)
+* REMARKS: Consider using DI Container - Autofac or Castle
 
 ### CsvReaderTests
-* TODO: Read_Should_Parse_Csv_File - Here we can assert returned IList<ICsvLine> using FluentAssertions.
+* REMARKS: Read_Should_Parse_Csv_File - Returned IList<ICsvLine> can be asserted using FluentAssertions.
 
 ### CsvWriterTests
 * REMARKS: Write_Should_Write_To_Csv_File - Check manually & clean results (physical file written on disc).

@@ -4,6 +4,10 @@ namespace CSV.Parser.Logic.Models
 {
     public class CsvFieldBuilderState : ICsvFieldBuilderState
     {
+        public int? FieldsCount { get; set; }
+
+        public char? AppendantCharacter { get; set; }
+
         public char? CurrentCharacter { get; set; }
 
         public int EndOfLineLengthToMatch { get; set; }

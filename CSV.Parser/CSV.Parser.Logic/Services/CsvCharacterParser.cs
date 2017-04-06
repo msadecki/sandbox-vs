@@ -37,9 +37,11 @@ namespace CSV.Parser.Logic.Services
                 {
                     _csvFieldBuilder.BuildNewFieldAfterEndOfLine();
 
-                    _csvLineConsumer.Consume(_csvFieldBuilder.CurrentCsvLine);
+                    var currentCsvLine = _csvFieldBuilder.CurrentCsvLine;
 
                     _csvFieldBuilder.InitNewLine();
+
+                    _csvLineConsumer.Consume(currentCsvLine);
                 }
             }
         }
@@ -51,14 +53,18 @@ namespace CSV.Parser.Logic.Services
                 _csvFieldBuilder.BuildNewFieldFromTail();
             }
 
-            if (_csvFieldBuilder.CurrentCsvLine.Fields.Any())
+            var currentCsvLine = _csvFieldBuilder.CurrentCsvLine;
+
+            if (currentCsvLine.Fields.Any())
             {
-                _csvLineConsumer.Consume(_csvFieldBuilder.CurrentCsvLine);
+                _csvFieldBuilder.EnsureLastAppendantCharacterIsNotDelimiter();
 
                 _csvFieldBuilder.InitNewLine();
+
+                _csvLineConsumer.Consume(currentCsvLine);
             }
 
-            return _csvFieldBuilder.CreatedLinesCount;
+            return _csvFieldBuilder.CurrentCsvLineIndex;
         }
     }
 }

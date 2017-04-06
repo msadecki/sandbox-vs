@@ -48,6 +48,7 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
 
         public CsvReaderTests()
         {
+            // Arrange
             _csvLineConsumerFactoryMock = new Mock<ICsvLineConsumerFactory>();
             _csvLineConsumerFactoryMock
                 .Setup(x => x.Create(It.IsAny<IOutputConfiguration>(), It.IsAny<IEncodingConfiguration>()))
@@ -82,8 +83,6 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
             int expectedLinesCount,
             int? expectedFieldsCount)
         {
-            // Arrange
-
             // Act
             var actualResult = _csvReader.Read(filePath);
 
@@ -104,8 +103,6 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
         [MemberData(nameof(GetInvalidTestCases))]
         public void Read_Should_Throw_CsvInvalidFormatException_With_ExpectedMessage(string filePath, string expectedExceptionMessage)
         {
-            // Arrange
-
             // Act & Assert
             var actualException = Assert.Throws<CsvInvalidFormatException>(() => _csvReader.Read(filePath));
             Assert.Equal(expectedExceptionMessage, actualException.Message);
@@ -127,19 +124,20 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
 
         private static IEnumerable<object[]> GetInvalidTestCases()
         {
-            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.11.UTF8.BOM.Invalid.txt", $"Only delimiter or new line is expected. {GetPosition(0, 3, 1)}" };
-            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.12.UTF8.BOM.LastDelimiter.Invalid.txt", $"Only delimiter or new line is expected. {GetPosition(0, 0, 0)}" };
-            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.13.UTF8.BOM.QuotationMark.Invalid.txt", $"Only delimiter or new line is expected. {GetPosition(0, 0, 0)}" };
-            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.14.UTF8.BOM.FieldsCount.Invalid.txt", $"Only delimiter or new line is expected. {GetPosition(0, 0, 0)}" };
-            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.15.UTF8.BOM.FieldsCount.Invalid.txt", $"Only delimiter or new line is expected. {GetPosition(0, 0, 0)}" };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.11.UTF8.BOM.Invalid.txt", GetExceptionMessagePosition("Only delimiter or new line is allowed.", 1, 3, 1) };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.12.UTF8.BOM.LastDelimiter.Invalid.txt", GetExceptionMessagePosition("The last field in the last line must not be followed by a delimiter only.", 1, 3, 0) };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.13.UTF8.BOM.QuotationMark.Invalid.txt", GetExceptionMessagePosition("Quotation mark is not allowed inside a field that is not enclosed with quotation mark.", 1, 1, 1) };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.14.UTF8.BOM.FieldsCount.Invalid.txt", GetExceptionMessagePosition("Each line should contain the same number of fields throughout the file.", 4, 2, 4) };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.15.UTF8.BOM.FieldsCount.Invalid.txt", GetExceptionMessagePosition("Each line should contain the same number of fields throughout the file.", 2, 6, 4) };
         }
 
-        private static string GetPosition(
-            int lineIndex,
-            int fieldIndex,
-            int fieldContentIndex)
+        private static string GetExceptionMessagePosition(
+            string message,
+            int line,
+            int field,
+            int fieldContentLength)
         {
-            return $"{{ LineIndex: {lineIndex}, FieldIndex: {fieldIndex}, FieldContentIndex: {fieldContentIndex} }}";
+            return $"{message} {{ Line: {line}, Field: {field}, FieldContentLength: {fieldContentLength} }}";
         }
     }
 }
