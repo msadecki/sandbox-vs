@@ -6,10 +6,10 @@ namespace CSV.Parser.Logic.Configurations
 {
     public class OutputConfiguration  : IOutputConfiguration
     {
-        public OutputTarget OutputTarget => OutputTarget.Console;
+        public OutputTarget OutputTarget { get; } = OutputTarget.Console;
 
-        public string Delimiter => "|";
+        public string Delimiter { get; } = "|";
 
-        public string EndOfLine => Environment.NewLine;
+        public string EndOfLine { get; } = Environment.NewLine;
     }
 }

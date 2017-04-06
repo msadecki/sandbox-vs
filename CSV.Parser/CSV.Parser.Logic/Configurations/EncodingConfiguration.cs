@@ -5,18 +5,10 @@ namespace CSV.Parser.Logic.Configurations
 {
     public class EncodingConfiguration : IEncodingConfiguration
     {
-        public Encoding DefaultFileInputEncoding => Encoding.UTF8;
+        public Encoding DefaultFileInputEncoding { get; } = Encoding.UTF8;
 
-        /// <summary>
-        /// Encoding examples without BOM:
-        /// Encoding.GetEncoding(852) - It works with polish characters in Console.Output
-        /// Encoding.GetEncoding("Windows-1250")
-        /// Encoding.ASCII
-        /// new UTF8Encoding(false, true)
-        /// new UnicodeEncoding(false, false, true)
-        /// </summary>
-        public Encoding ConsoleOutputEncoding => Encoding.GetEncoding(852);
+        public Encoding ConsoleOutputEncoding { get; } = Encoding.GetEncoding(852);
 
-        public Encoding FileOutputEncoding => Encoding.UTF8;
+        public Encoding FileOutputEncoding { get; } = Encoding.UTF8;
     }
 }

@@ -21,7 +21,6 @@ namespace CSV.Parser.Logic.Services
             _textWriterFactory = textWriterFactory;
         }
 
-        // TODO/REMARKS: This class/method is not part of coding exercise but it can be usefull to generate some test csv files.
         public void Write(IEnumerable<ICsvLine> csvLines)
         {
             using (var textWriter = _textWriterFactory.Create(OutputTarget.File))

@@ -4,8 +4,8 @@ namespace CSV.Parser.Logic.Configurations
 {
     public class CsvFieldBuilderConfiguration : ICsvFieldBuilderConfiguration
     {
-        public int RawFieldBuilderCapacity => 1024;
+        public int RawFieldBuilderCapacity { get; } = 1024;
 
-        public int CsvLineFieldsCapacity => 128;
+        public int CsvLineFieldsCapacity { get; } = 128;
     }
 }

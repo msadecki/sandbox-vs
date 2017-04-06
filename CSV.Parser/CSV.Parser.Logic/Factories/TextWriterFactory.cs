@@ -46,7 +46,6 @@ namespace CSV.Parser.Logic.Factories
 
         private string GetFilePath()
         {
-            // TODO: Change to some safe place to write output file and add some unique {Guid.NewGuid():N} or timestamp.
             var frame = new StackTrace().GetFrame(3);
             var method = frame?.GetMethod();
             var methodName = method?.Name;

@@ -44,7 +44,6 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
             {
                 Assert.Equal(expectedFieldsCount.Value, actualResult.First().Fields.Count);
             }
-            // TODO: Here we can assert returned IList<ICsvLine> using FluentAssertions
         }
 
         [Theory]

@@ -12,7 +12,6 @@ namespace CSV.Parser.Logic.Factories
             ICsvFieldBuilderConfiguration csvFieldBuilderConfiguration,
             IBufferableReaderConfiguration bufferableReaderConfiguration)
         {
-            // TODO: Consider using DI Container - Autofac or Castle
             return new CsvStreamReader(
                 new CsvCharacterParserFactory(
                     csvConfiguration,

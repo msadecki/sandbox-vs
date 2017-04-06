@@ -6,7 +6,6 @@ using CSV.Parser.Logic.Abstractions.Interfaces.Services;
 
 namespace CSV.Parser.Logic.Services
 {
-    // TODO: Remove it - in test just decorate ICsvLineConsumer and mock ICsvLineConsumerFactory
     public class CachedCsvReader : ICachedCsvReader
     {
         private readonly IEncodingConfiguration _encodingConfiguration;

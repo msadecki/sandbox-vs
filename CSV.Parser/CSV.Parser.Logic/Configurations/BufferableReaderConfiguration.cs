@@ -4,6 +4,6 @@ namespace CSV.Parser.Logic.Configurations
 {
     public class BufferableReaderConfiguration : IBufferableReaderConfiguration
     {
-        public int ReaderBufferSize => 1024;
+        public int ReaderBufferSize { get; } = 1024;
     }
 }

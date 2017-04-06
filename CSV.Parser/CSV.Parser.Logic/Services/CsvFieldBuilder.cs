@@ -93,7 +93,6 @@ namespace CSV.Parser.Logic.Services
                 _state.IsDelimiterSeekEnabled = true;
                 _state.IsEndOfLineSeekEnabled = true;
                 _state.IsDelimiterOrEndOfLineRequired = true;
-                // TODO/REMARKS: Only delimiter or new line is allowed as next character - we must close the field
             }
 
             _state.CurrentCharacter = character;

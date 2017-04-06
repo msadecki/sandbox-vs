@@ -83,7 +83,6 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
             _csvWriter.Write(csvLines);
 
             // Assert
-            // TODO/TEMPORARY: Check manually & clean results (physical file written on disc)
         }
     }
 }
