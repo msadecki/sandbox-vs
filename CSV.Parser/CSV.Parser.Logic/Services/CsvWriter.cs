@@ -11,19 +11,22 @@ namespace CSV.Parser.Logic.Services
     public class CsvWriter : ICsvWriter
     {
         private readonly ICsvConfiguration _csvConfiguration;
+        private readonly IEncodingConfiguration _encodingConfiguration;
         private readonly ITextWriterFactory _textWriterFactory;
 
         public CsvWriter(
             ICsvConfiguration csvConfiguration,
+            IEncodingConfiguration encodingConfiguration,
             ITextWriterFactory textWriterFactory)
         {
             _csvConfiguration = csvConfiguration;
+            _encodingConfiguration = encodingConfiguration;
             _textWriterFactory = textWriterFactory;
         }
 
         public void Write(IEnumerable<ICsvLine> csvLines)
         {
-            using (var textWriter = _textWriterFactory.Create(OutputTarget.File))
+            using (var textWriter = _textWriterFactory.Create(OutputTarget.File, _encodingConfiguration))
             {
                 var delimiter = _csvConfiguration.Delimiter.ToString();
                 var quotationMark = _csvConfiguration.QuotationMark.ToString();

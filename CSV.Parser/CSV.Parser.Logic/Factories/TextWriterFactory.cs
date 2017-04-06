@@ -9,39 +9,33 @@ namespace CSV.Parser.Logic.Factories
 {
     public class TextWriterFactory : ITextWriterFactory
     {
-        private readonly IEncodingConfiguration _encodingConfiguration;
-
-        public TextWriterFactory(
+        public TextWriter Create(
+            OutputTarget outputTarget,
             IEncodingConfiguration encodingConfiguration)
-        {
-            _encodingConfiguration = encodingConfiguration;
-        }
-
-        public TextWriter Create(OutputTarget outputTarget)
         {
             switch (outputTarget)
             {
                 case OutputTarget.Console:
-                    return CreateConsoleStreamWriter();
+                    return CreateConsoleStreamWriter(encodingConfiguration);
                 case OutputTarget.File:
-                    return CreateFileStreamWriter();
+                    return CreateFileStreamWriter(encodingConfiguration);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(outputTarget), outputTarget, null);
             }
         }
 
-        private StreamWriter CreateConsoleStreamWriter()
+        private StreamWriter CreateConsoleStreamWriter(IEncodingConfiguration encodingConfiguration)
         {
-            return new StreamWriter(Console.OpenStandardOutput(), _encodingConfiguration.ConsoleOutputEncoding)
+            return new StreamWriter(Console.OpenStandardOutput(), encodingConfiguration.ConsoleOutputEncoding)
             {
                 AutoFlush = true
             };
         }
 
-        private StreamWriter CreateFileStreamWriter()
+        private StreamWriter CreateFileStreamWriter(IEncodingConfiguration encodingConfiguration)
         {
             var filePath = GetFilePath();
-            return new StreamWriter(filePath, false, _encodingConfiguration.FileOutputEncoding);
+            return new StreamWriter(filePath, false, encodingConfiguration.FileOutputEncoding);
         }
 
         private string GetFilePath()

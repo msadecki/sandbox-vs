@@ -36,6 +36,8 @@ namespace CSV.Parser.Logic.Factories
                 _outputConfiguration,
                 _encodingConfiguration,
                 new TextReaderFactory(),
+                new TextWriterFactory(),
+                new OuputLineFactory(_outputConfiguration),
                 new CsvLineConsumerFactory(),
                 new CsvStreamReaderFactory());
         }

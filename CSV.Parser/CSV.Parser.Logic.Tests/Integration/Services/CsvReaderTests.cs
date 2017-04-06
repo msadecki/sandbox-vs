@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using CSV.Parser.Logic.Abstractions.Interfaces.Configurations;
 using CSV.Parser.Logic.Abstractions.Interfaces.Factories;
 using CSV.Parser.Logic.Abstractions.Interfaces.Models;
 using CSV.Parser.Logic.Abstractions.Interfaces.Services;
@@ -14,7 +13,7 @@ using Xunit;
 
 namespace CSV.Parser.Logic.Tests.Integration.Services
 {
-    public class CsvReaderTests : IDisposable
+    public class CsvReaderTests
     {
         private sealed class CsvLineConsumerDecorator : ICsvLineConsumer
         {
@@ -33,11 +32,6 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
                 _csvLineConsumer.Consume(csvLine);
                 CsvLines.Add(csvLine);
             }
-
-            public void Dispose()
-            {
-                _csvLineConsumer.Dispose();
-            }
         }
 
         private readonly ICsvReader _csvReader;
@@ -51,29 +45,28 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
             // Arrange
             _csvLineConsumerFactoryMock = new Mock<ICsvLineConsumerFactory>();
             _csvLineConsumerFactoryMock
-                .Setup(x => x.Create(It.IsAny<IOutputConfiguration>(), It.IsAny<IEncodingConfiguration>()))
-                .Returns((IOutputConfiguration outputConfiguration, IEncodingConfiguration encodingConfiguration) =>
+                .Setup(x => x.Create(It.IsAny<TextWriter>(), It.IsAny<IOuputLineFactory>()))
+                .Returns((TextWriter textWriter, IOuputLineFactory ouputLineFactory) =>
                 {
                     var csvLineConsumerFactory = new CsvLineConsumerFactory();
-                    var csvLineConsumer = csvLineConsumerFactory.Create(outputConfiguration, encodingConfiguration);
+                    var csvLineConsumer = csvLineConsumerFactory.Create(textWriter, ouputLineFactory);
                     _csvLineConsumerDecorator = new CsvLineConsumerDecorator(csvLineConsumer);
                     return _csvLineConsumerDecorator;
                 });
+
+            var outputConfiguration = new OutputConfiguration();
 
             _csvReader = new CsvReader(
                 new CsvConfiguration(),
                 new CsvFieldBuilderConfiguration(),
                 new BufferableReaderConfiguration(),
-                new OutputConfiguration(),
+                outputConfiguration,
                 new EncodingConfiguration(),
                 new TextReaderFactory(),
+                new TextWriterFactory(),
+                new OuputLineFactory(outputConfiguration),
                 _csvLineConsumerFactoryMock.Object,
                 new CsvStreamReaderFactory());
-        }
-
-        void IDisposable.Dispose()
-        {
-            _csvLineConsumerDecorator?.Dispose();
         }
 
         [Theory]
@@ -96,7 +89,7 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
             }
 
             _csvLineConsumerFactoryMock
-                .Verify(x => x.Create(It.IsAny<IOutputConfiguration>(), It.IsAny<IEncodingConfiguration>()), Times.Once);
+                .Verify(x => x.Create(It.IsAny<TextWriter>(), It.IsAny<IOuputLineFactory>()), Times.Once);
         }
 
         [Theory]

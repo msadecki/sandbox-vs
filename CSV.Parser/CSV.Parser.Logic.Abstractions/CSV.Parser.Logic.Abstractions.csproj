@@ -48,6 +48,7 @@
     <Compile Include="Interfaces\Configurations\IOutputConfiguration.cs" />
     <Compile Include="Interfaces\Factories\ICsvFieldBuilderStateFactory.cs" />
     <Compile Include="Interfaces\Factories\ICsvReaderFactory.cs" />
+    <Compile Include="Interfaces\Factories\IOuputLineFactory.cs" />
     <Compile Include="Interfaces\Models\ICsvFieldBuilderState.cs" />
     <Compile Include="Interfaces\Services\IBufferableReader.cs" />
     <Compile Include="Interfaces\Factories\IBufferableReaderFactory.cs" />

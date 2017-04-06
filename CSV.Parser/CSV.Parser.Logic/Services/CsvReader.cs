@@ -12,6 +12,8 @@ namespace CSV.Parser.Logic.Services
         private readonly IOutputConfiguration _outputConfiguration;
         private readonly IEncodingConfiguration _encodingConfiguration;
         private readonly ITextReaderFactory _textReaderFactory;
+        private readonly ITextWriterFactory _textWriterFactory;
+        private readonly IOuputLineFactory _ouputLineFactory;
         private readonly ICsvLineConsumerFactory _csvLineConsumerFactory;
         private readonly ICsvStreamReaderFactory _csvStreamReaderFactory;
 
@@ -22,6 +24,8 @@ namespace CSV.Parser.Logic.Services
             IOutputConfiguration outputConfiguration,
             IEncodingConfiguration encodingConfiguration,
             ITextReaderFactory textReaderFactory,
+            ITextWriterFactory textWriterFactory,
+            IOuputLineFactory ouputLineFactory,
             ICsvLineConsumerFactory csvLineConsumerFactory,
             ICsvStreamReaderFactory csvStreamReaderFactory)
         {
@@ -31,6 +35,8 @@ namespace CSV.Parser.Logic.Services
             _outputConfiguration = outputConfiguration;
             _encodingConfiguration = encodingConfiguration;
             _textReaderFactory = textReaderFactory;
+            _textWriterFactory = textWriterFactory;
+            _ouputLineFactory = ouputLineFactory;
             _csvLineConsumerFactory = csvLineConsumerFactory;
             _csvStreamReaderFactory = csvStreamReaderFactory;
         }
@@ -39,8 +45,12 @@ namespace CSV.Parser.Logic.Services
         {
             using (var textReader = _textReaderFactory.Create(filePath, _encodingConfiguration))
             {
-                using (var csvLineConsumer = _csvLineConsumerFactory.Create(_outputConfiguration, _encodingConfiguration))
+                using (var textWriter = _textWriterFactory.Create(_outputConfiguration.OutputTarget, _encodingConfiguration))
                 {
+                    var csvLineConsumer = _csvLineConsumerFactory.Create(
+                        textWriter,
+                        _ouputLineFactory);
+
                     var csvStreamReader = _csvStreamReaderFactory.Create(
                         _csvConfiguration,
                         _csvFieldBuilderConfiguration,

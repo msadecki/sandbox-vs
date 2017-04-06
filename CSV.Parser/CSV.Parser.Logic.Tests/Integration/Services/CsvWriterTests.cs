@@ -13,8 +13,8 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
     {
         private readonly ICsvWriter _csvWriter = new CsvWriter(
             new CsvConfiguration(),
-            new TextWriterFactory(
-                new EncodingConfiguration()));
+            new EncodingConfiguration(),
+            new TextWriterFactory());
 
         [Fact]
         public void Write_Should_Write_To_Csv_File()
