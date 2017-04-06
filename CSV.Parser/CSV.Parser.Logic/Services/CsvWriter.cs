@@ -25,8 +25,9 @@ namespace CSV.Parser.Logic.Services
         {
             using (var textWriter = _textWriterFactory.Create(OutputTarget.File))
             {
-                var oneQuotationMark = _csvConfiguration.QuotationMark.ToString();
-                var twoQuotationMarks = string.Concat(_csvConfiguration.QuotationMark, _csvConfiguration.QuotationMark);
+                var delimiter = _csvConfiguration.Delimiter.ToString();
+                var quotationMark = _csvConfiguration.QuotationMark.ToString();
+                var escapedQuotationMark = string.Concat(_csvConfiguration.QuotationMark, _csvConfiguration.QuotationMark);
 
                 StringBuilder lineBuilder = null;
                 string csvFieldContent = null;
@@ -47,9 +48,19 @@ namespace CSV.Parser.Logic.Services
                         csvFieldContent = csvField.Content;
                         if (csvFieldContent != null)
                         {
-                            lineBuilder.Append(_csvConfiguration.QuotationMark);
-                            lineBuilder.Append(csvFieldContent.Replace(oneQuotationMark, twoQuotationMarks));
-                            lineBuilder.Append(_csvConfiguration.QuotationMark);
+                            if (csvFieldContent == string.Empty
+                                || csvFieldContent.Contains(delimiter)
+                                || csvFieldContent.Contains(quotationMark)
+                                || csvFieldContent.Contains(_csvConfiguration.EndOfLine))
+                            {
+                                lineBuilder.Append(_csvConfiguration.QuotationMark);
+                                lineBuilder.Append(csvFieldContent.Replace(quotationMark, escapedQuotationMark));
+                                lineBuilder.Append(_csvConfiguration.QuotationMark);
+                            }
+                            else
+                            {
+                                lineBuilder.Append(csvFieldContent);
+                            }
                         }
                         lineBuilder.Append(_csvConfiguration.Delimiter);
                     }

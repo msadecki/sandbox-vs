@@ -81,7 +81,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Integration\Services\CsvReaderTests.cs" />
-    <Compile Include="Integration\Services\CachedCsvReaderTests.cs" />
     <Compile Include="Integration\Services\CsvWriterTests.cs" />
     <Compile Include="Integration\Factories\TextReaderFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -51,8 +51,6 @@
     <Compile Include="Interfaces\Models\ICsvFieldBuilderState.cs" />
     <Compile Include="Interfaces\Services\IBufferableReader.cs" />
     <Compile Include="Interfaces\Factories\IBufferableReaderFactory.cs" />
-    <Compile Include="Interfaces\Services\ICachedCsvLineConsumer.cs" />
-    <Compile Include="Interfaces\Factories\ICachedCsvLineConsumerFactory.cs" />
     <Compile Include="Interfaces\Services\ICsvCharacterParser.cs" />
     <Compile Include="Interfaces\Factories\ICsvCharacterParserFactory.cs" />
     <Compile Include="Interfaces\Services\ICsvFieldBuilder.cs" />
@@ -62,7 +60,6 @@
     <Compile Include="Interfaces\Services\ICsvLineConsumer.cs" />
     <Compile Include="Interfaces\Factories\ICsvLineConsumerFactory.cs" />
     <Compile Include="Interfaces\Factories\ICsvLineFactory.cs" />
-    <Compile Include="Interfaces\Services\ICachedCsvReader.cs" />
     <Compile Include="Interfaces\Services\ICsvStreamReader.cs" />
     <Compile Include="Interfaces\Factories\ICsvStreamReaderFactory.cs" />
     <Compile Include="Interfaces\Services\ICsvWriter.cs" />

@@ -30,16 +30,13 @@
 ### CsvStreamReaderFactory and others
 * Consider using DI Container - Autofac or Castle
 
-### CsvCharacterParser - TO VERIFY
+### CsvCharacterParser - REMARKS TO VERIFY
 * REMARKS: Empty lines should not be ignored (TODO: How to count lines in 1 column CSV - if all fields are empty then ..., if some are nonempty then ... ?)
 * REMARKS: First line should determine fields count - use it to validate all other lines (use exception throwing or some validation result)
 * REMARKS: ParseTail - Verify that it always works correctly. See doc "The last field in the record must not be followed by a comma").
 
 ### CsvFieldBuilder
 * TODO: InitNewLine - Check fields count with first line on every InitNewLine (CSV.14.UTF8.BOM.FieldsCount.Invalid.txt, ...)
-
-### CachedCsvReader
-* TODO: Remove it - in test just decorate ICsvLineConsumer and mock ICsvLineConsumerFactory (move test cases from CachedCsvReaderTests to CsvReaderTests).
 
 ### CsvReaderTests
 * TODO: Read_Should_Parse_Csv_File - Here we can assert returned IList<ICsvLine> using FluentAssertions.
