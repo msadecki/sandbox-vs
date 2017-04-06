@@ -84,7 +84,6 @@
     <Compile Include="Integration\Services\CachedCsvReaderTests.cs" />
     <Compile Include="Integration\Services\CsvWriterTests.cs" />
     <Compile Include="Integration\Factories\TextReaderFactoryTests.cs" />
-    <Compile Include="Unit\UnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +104,27 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Integration\TestCases\CsvReader\CSV.01.UTF8.No.BOM.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\CsvReader\CSV.15.UTF8.BOM.FieldsCount.Invalid.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\CsvReader\CSV.14.UTF8.BOM.FieldsCount.Invalid.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\CsvReader\CSV.13.UTF8.BOM.QuotationMark.Invalid.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\CsvReader\CSV.12.UTF8.BOM.LastComma.Invalid.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\CsvReader\CSV.10.UTF8.BOM.LastDelimiter.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\CsvReader\CSV.11.UTF8.BOM.Invalid.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Integration\TestCases\CsvReader\CSV.09.UTF8.BOM.SingleLine.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Integration\TestCases\CsvReader\CSV.08.UTF8.BOM.EmptyLinesOnly.txt">

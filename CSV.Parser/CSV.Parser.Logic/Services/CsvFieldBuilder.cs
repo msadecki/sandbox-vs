@@ -3,6 +3,7 @@ using CSV.Parser.Logic.Abstractions.Interfaces.Configurations;
 using CSV.Parser.Logic.Abstractions.Interfaces.Factories;
 using CSV.Parser.Logic.Abstractions.Interfaces.Models;
 using CSV.Parser.Logic.Abstractions.Interfaces.Services;
+using CSV.Parser.Logic.Exceptions;
 
 namespace CSV.Parser.Logic.Services
 {
@@ -15,6 +16,10 @@ namespace CSV.Parser.Logic.Services
         private readonly ICsvFieldBuilderState _state;
         private readonly StringBuilder _rawFieldBuilder;
 
+        public bool IsDelimiterMatched => _state.IsDelimiterSeekEnabled && _state.CurrentCharacter == _csvConfiguration.Delimiter;
+
+        public bool IsEndOfLineMatched => _state.EndOfLineLengthToMatch == 0;
+
         public int RawFieldBuilderLength => _rawFieldBuilder.Length;
 
         public ICsvLine CurrentCsvLine { get; private set; }
@@ -26,24 +31,17 @@ namespace CSV.Parser.Logic.Services
             ICsvFieldBuilderConfiguration csvFieldBuilderConfiguration,
             ICsvLineFactory csvLineFactory,
             ICsvFieldFactory csvFieldFactory,
-            ICsvFieldBuilderStateFactory csvFieldBuilderStateFactory)
+            ICsvFieldBuilderState state)
         {
             _csvConfiguration = csvConfiguration;
             _csvFieldBuilderConfiguration = csvFieldBuilderConfiguration;
             _csvLineFactory = csvLineFactory;
             _csvFieldFactory = csvFieldFactory;
-            _state = csvFieldBuilderStateFactory.Create();
+            _state = state;
             _rawFieldBuilder = new StringBuilder(csvFieldBuilderConfiguration.RawFieldBuilderCapacity);
-            CreatedLinesCount = -1;
 
-            InitNewLine();
-        }
-
-        public void Append(char currentCharacter)
-        {
-            _state.CurrentCharacter = currentCharacter;
-
-            _rawFieldBuilder.Append(currentCharacter);
+            CurrentCsvLine = _csvLineFactory.Create(_csvFieldBuilderConfiguration.CsvLineFieldsCapacity);
+            ClearState();
         }
 
         public void InitNewLine()
@@ -58,21 +56,51 @@ namespace CSV.Parser.Logic.Services
         {
             _rawFieldBuilder.Clear();
 
-            _state.EndOfLineLengthToMatch = _csvConfiguration.EndOfLineLength;
-            _state.IsDelimiterSeekEnabled = true;
-            _state.IsEndOfLineSeekEnabled = true;
-            _state.IsQuotationMarkStartFieldSeekEnabled = true;
-            _state.IsQuotationMarkEndFieldSeekEnabled = false;
+            ClearState();
         }
 
-        public bool IsDelimiterMatched()
+        public bool Append(char character)
         {
-            return _state.IsDelimiterSeekEnabled && _state.CurrentCharacter == _csvConfiguration.Delimiter;
-        }
+            if (character == _csvConfiguration.QuotationMark)
+            {
+                if (_state.IsDelimiterOrEndOfLineRequired)
+                {
+                    throw new CsvInvalidFormatException($"Only delimiter or new line is expected. {GetPosition()}");
+                }
 
-        public bool IsEndOfLineMatched()
-        {
-            return _state.EndOfLineLengthToMatch == 0;
+                if (_state.IsQuotationMarkFirstInField)
+                {
+                    if (_state.CurrentCharacter == _csvConfiguration.QuotationMark)
+                    {
+                        _state.CurrentCharacter = null;
+
+                        return false;
+                    }
+                }
+                else if (RawFieldBuilderLength == 0)
+                {
+                    _state.IsDelimiterSeekEnabled = false;
+                    _state.IsEndOfLineSeekEnabled = false;
+                    _state.IsQuotationMarkFirstInField = true;
+
+                    return false;
+                }
+            }
+            else if (_state.CurrentCharacter == _csvConfiguration.QuotationMark)
+            {
+                _rawFieldBuilder.Remove(RawFieldBuilderLength - _csvConfiguration.QuotationMarkLenght, _csvConfiguration.QuotationMarkLenght);
+
+                _state.IsDelimiterSeekEnabled = true;
+                _state.IsEndOfLineSeekEnabled = true;
+                _state.IsDelimiterOrEndOfLineRequired = true;
+                // TODO/REMARKS: Only delimiter or new line is allowed as next character - we must close the field
+            }
+
+            _state.CurrentCharacter = character;
+
+            _rawFieldBuilder.Append(character);
+
+            return true;
         }
 
         public void EnsureEndOfLineLengthToMatch()
@@ -83,6 +111,10 @@ namespace CSV.Parser.Logic.Services
                 {
                     _state.EndOfLineLengthToMatch--;
                 }
+                else if (_state.IsDelimiterOrEndOfLineRequired)
+                {
+                    throw new CsvInvalidFormatException($"Only delimiter or new line is expected. {GetPosition()}");
+                }
                 else if (_state.EndOfLineLengthToMatch != _csvConfiguration.EndOfLineLength)
                 {
                     _state.EndOfLineLengthToMatch = _csvConfiguration.EndOfLineLength;
@@ -90,11 +122,52 @@ namespace CSV.Parser.Logic.Services
             }
         }
 
-        public void BuildNewField(int charactersToIgnoreCount)
+        public void BuildNewFieldAfterDelimiter()
         {
-            var fieldContent = _rawFieldBuilder.ToString(0, _rawFieldBuilder.Length - charactersToIgnoreCount);
+            BuildNewField(_csvConfiguration.DelimiterLenght);
+        }
+
+        public void BuildNewFieldAfterEndOfLine()
+        {
+            BuildNewField(_csvConfiguration.EndOfLineLength);
+        }
+
+        public void BuildNewFieldFromTail()
+        {
+            BuildNewField(0);
+        }
+
+        private void BuildNewField(int charactersToIgnoreCount)
+        {
+            var fieldContent = _rawFieldBuilder.ToString(0, RawFieldBuilderLength - charactersToIgnoreCount);
 
             CurrentCsvLine.Fields.Add(_csvFieldFactory.Create(fieldContent));
+        }
+
+        private void ClearState()
+        {
+            _state.CurrentCharacter = null;
+            _state.EndOfLineLengthToMatch = _csvConfiguration.EndOfLineLength;
+            _state.IsDelimiterSeekEnabled = true;
+            _state.IsEndOfLineSeekEnabled = true;
+            _state.IsQuotationMarkFirstInField = false;
+            _state.IsDelimiterOrEndOfLineRequired = false;
+        }
+
+        private string GetPosition()
+        {
+            return GetPosition(
+                CreatedLinesCount,
+                CurrentCsvLine.Fields.Count,
+                RawFieldBuilderLength);
+        }
+
+        private static string GetPosition(
+            int lineIndex,
+            int fieldIndex,
+            int fieldContentIndex)
+        {
+            return $"{{ LineIndex: {lineIndex}, FieldIndex: {fieldIndex}, FieldContentIndex: {fieldContentIndex} }}";
         }
     }
 }

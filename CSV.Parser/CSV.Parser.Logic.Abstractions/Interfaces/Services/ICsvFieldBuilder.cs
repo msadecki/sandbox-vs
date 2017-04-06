@@ -4,24 +4,28 @@ namespace CSV.Parser.Logic.Abstractions.Interfaces.Services
 {
     public interface ICsvFieldBuilder
     {
+        bool IsDelimiterMatched { get; }
+
+        bool IsEndOfLineMatched { get; }
+
         int RawFieldBuilderLength { get; }
 
         ICsvLine CurrentCsvLine { get; }
 
         int CreatedLinesCount { get; }
 
-        void Append(char currentCharacter);
-
         void InitNewLine();
 
         void InitNewField();
 
-        bool IsDelimiterMatched();
-
-        bool IsEndOfLineMatched();
+        bool Append(char character);
 
         void EnsureEndOfLineLengthToMatch();
 
-        void BuildNewField(int charactersToIgnoreCount);
+        void BuildNewFieldAfterDelimiter();
+
+        void BuildNewFieldAfterEndOfLine();
+
+        void BuildNewFieldFromTail();
     }
 }

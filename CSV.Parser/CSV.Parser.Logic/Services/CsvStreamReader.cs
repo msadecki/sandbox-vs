@@ -21,17 +21,17 @@ namespace CSV.Parser.Logic.Services
         {
             var bufferableReader = _bufferableReaderFactory.Create(textReader);
 
-            var csvFieldBuilder = _csvCharacterParserFactory.Create(csvLineConsumer);
+            var csvCharacterParser = _csvCharacterParserFactory.Create(csvLineConsumer);
 
             while (bufferableReader.ReadBuffer())
             {
                 for (var pos = 0; pos < bufferableReader.BufferLength; pos++)
                 {
-                    csvFieldBuilder.ParseCharacter(bufferableReader.Buffer[pos]);
+                    csvCharacterParser.ParseCharacter(bufferableReader.Buffer[pos]);
                 }
             }
 
-            return csvFieldBuilder.ParseTail();
+            return csvCharacterParser.ParseTail();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace CSV.Parser.Logic.Tests.Integration.Factories
 
         public TextReaderFactoryTests()
         {
-            _textReaderFactory = new TextReaderFactory(_encodingConfigurationMock.Object);
+            _textReaderFactory = new TextReaderFactory();
         }
 
         [Theory]
@@ -32,7 +32,7 @@ namespace CSV.Parser.Logic.Tests.Integration.Factories
 
             // Act
             string actualFileContent;
-            using (var textReader = _textReaderFactory.Create(filePath))
+            using (var textReader = _textReaderFactory.Create(filePath, _encodingConfigurationMock.Object))
             {
                 actualFileContent = textReader.ReadToEnd();
             }

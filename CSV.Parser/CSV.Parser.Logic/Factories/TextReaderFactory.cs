@@ -6,19 +6,13 @@ namespace CSV.Parser.Logic.Factories
 {
     public class TextReaderFactory : ITextReaderFactory
     {
-        private readonly IEncodingConfiguration _encodingConfiguration;
-
-        public TextReaderFactory(
+        public TextReader Create(
+            string filePath,
             IEncodingConfiguration encodingConfiguration)
-        {
-            _encodingConfiguration = encodingConfiguration;
-        }
-
-        public TextReader Create(string filePath)
         {
             return new StreamReader(
                 filePath,
-                _encodingConfiguration.DefaultFileInputEncoding,
+                encodingConfiguration.DefaultFileInputEncoding,
                 true);
         }
     }

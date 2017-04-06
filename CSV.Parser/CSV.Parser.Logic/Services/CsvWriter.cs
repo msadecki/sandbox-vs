@@ -29,34 +29,40 @@ namespace CSV.Parser.Logic.Services
                 var oneQuotationMark = _csvConfiguration.QuotationMark.ToString();
                 var twoQuotationMarks = string.Concat(_csvConfiguration.QuotationMark, _csvConfiguration.QuotationMark);
 
-                StringBuilder outputLine = null;
-
+                StringBuilder lineBuilder = null;
+                string csvFieldContent = null;
                 foreach (var csvLine in csvLines)
                 {
-                    if (outputLine == null)
+                    if (lineBuilder == null)
                     {
-                        outputLine = new StringBuilder();
+                        lineBuilder = new StringBuilder();
                     }
                     else
                     {
-                        outputLine.Clear();
+                        lineBuilder.Clear();
                         textWriter.Write(_csvConfiguration.EndOfLine);
                     }
 
                     foreach (var csvField in csvLine.Fields)
                     {
-                        if (csvField.Content != null)
+                        csvFieldContent = csvField.Content;
+                        if (csvFieldContent != null)
                         {
-                            outputLine.Append(_csvConfiguration.QuotationMark);
-                            outputLine.Append(csvField.Content.Replace(oneQuotationMark, twoQuotationMarks));
-                            outputLine.Append(_csvConfiguration.QuotationMark);
+                            lineBuilder.Append(_csvConfiguration.QuotationMark);
+                            lineBuilder.Append(csvFieldContent.Replace(oneQuotationMark, twoQuotationMarks));
+                            lineBuilder.Append(_csvConfiguration.QuotationMark);
                         }
-                        outputLine.Append(_csvConfiguration.Delimiter);
+                        lineBuilder.Append(_csvConfiguration.Delimiter);
                     }
 
-                    textWriter.Write(outputLine.Length > 0
-                        ? outputLine.ToString(0, outputLine.Length - _csvConfiguration.DelimiterLenght)
+                    textWriter.Write(lineBuilder.Length > 0
+                        ? lineBuilder.ToString(0, lineBuilder.Length - _csvConfiguration.DelimiterLenght)
                         : string.Empty);
+                }
+
+                if (csvFieldContent == null && lineBuilder != null)
+                {
+                    textWriter.Write(_csvConfiguration.EndOfLine);
                 }
             }
         }

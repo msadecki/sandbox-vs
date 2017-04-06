@@ -4,7 +4,7 @@ namespace CSV.Parser.Logic.Models
 {
     public class CsvFieldBuilderState : ICsvFieldBuilderState
     {
-        public char CurrentCharacter { get; set; }
+        public char? CurrentCharacter { get; set; }
 
         public int EndOfLineLengthToMatch { get; set; }
 
@@ -12,8 +12,8 @@ namespace CSV.Parser.Logic.Models
 
         public bool IsEndOfLineSeekEnabled { get; set; }
 
-        public bool IsQuotationMarkStartFieldSeekEnabled { get; set; }
+        public bool IsQuotationMarkFirstInField { get; set; }
 
-        public bool IsQuotationMarkEndFieldSeekEnabled { get; set; }
+        public bool IsDelimiterOrEndOfLineRequired { get; set; }
     }
 }

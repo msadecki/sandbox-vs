@@ -45,6 +45,7 @@
     <Compile Include="Configurations\EncodingConfiguration.cs" />
     <Compile Include="Configurations\OutputConfiguration.cs" />
     <Compile Include="Factories\CsvFieldBuilderStateFactory.cs" />
+    <Compile Include="Factories\CsvReaderFactory.cs" />
     <Compile Include="Models\CsvField.cs" />
     <Compile Include="Models\CsvLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,11 +57,12 @@
     <Compile Include="Factories\CsvCharacterParserFactory.cs" />
     <Compile Include="Factories\CsvFieldBuilderFactory.cs" />
     <Compile Include="Models\CsvFieldBuilderState.cs" />
-    <Compile Include="Services\CsvFieldFactory.cs" />
+    <Compile Include="Factories\CsvFieldFactory.cs" />
     <Compile Include="Services\CsvFieldBuilder.cs" />
+    <Compile Include="Exceptions\CsvInvalidFormatException.cs" />
     <Compile Include="Services\CsvLineConsumer.cs" />
     <Compile Include="Factories\CsvLineConsumerFactory.cs" />
-    <Compile Include="Services\CsvLineFactory.cs" />
+    <Compile Include="Factories\CsvLineFactory.cs" />
     <Compile Include="Services\CachedCsvReader.cs" />
     <Compile Include="Services\CsvReader.cs" />
     <Compile Include="Services\CsvStreamReader.cs" />

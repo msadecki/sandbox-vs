@@ -26,34 +26,34 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
                 {
                     Fields = new List<ICsvField>
                     {
-                        new CsvField { Content = "H1.1"},
-                        new CsvField { Content = " H2 "},
-                        new CsvField { Content = @"""H3"""},
-                        new CsvField { Content = "H4"}
+                        new CsvField { Content = "H1.1" },
+                        new CsvField { Content = " H2 " },
+                        new CsvField { Content = @"""H3""" },
+                        new CsvField { Content = "H4" }
                     }
                 },
                 new CsvLine
                 {
                     Fields = new List<ICsvField>
                     {
-                        new CsvField { Content = "V2.1"},
-                        new CsvField { Content = " V2 "},
-                        new CsvField { Content = @"""V3"""},
-                        new CsvField { Content = "V4: [ąćęłńóśźż] [ĄĆĘŁŃÓŚŹŻ] "}
+                        new CsvField { Content = "V2.1" },
+                        new CsvField { Content = " V2 " },
+                        new CsvField { Content = @"""V3""" },
+                        new CsvField { Content = "V4: [ąćęłńóśźż] [ĄĆĘŁŃÓŚŹŻ] " }
                     }
                 },
                 new CsvLine
                 {
                     Fields = new List<ICsvField>
                     {
-                        new CsvField { Content = "V3.1"},
-                        new CsvField { Content = " V2 "},
+                        new CsvField { Content = "V3.1" },
+                        new CsvField { Content = " V2 " },
                         new CsvField { Content = @"V3
                                                    -1,
                                                    -2,
                                                  ""...""
 
-                                                      "},
+                                                      " },
                         new CsvField { Content = "V4" }
                     }
                 },
@@ -61,20 +61,20 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
                 {
                     Fields = new List<ICsvField>
                     {
-                        new CsvField { Content = null},
-                        new CsvField { Content = string.Empty},
-                        new CsvField { Content = null},
-                        new CsvField { Content = null}
+                        new CsvField { Content = null },
+                        new CsvField { Content = string.Empty },
+                        new CsvField { Content = null },
+                        new CsvField { Content = null }
                     }
                 },
                 new CsvLine
                 {
                     Fields = new List<ICsvField>
                     {
-                        new CsvField { Content = "V5.1"},
-                        new CsvField { Content = null},
-                        new CsvField { Content = @"V3"""},
-                        new CsvField { Content = "V4"}
+                        new CsvField { Content = "V5.1" },
+                        new CsvField { Content = null },
+                        new CsvField { Content = @"V3""" },
+                        new CsvField { Content = null }
                     }
                 }
             };

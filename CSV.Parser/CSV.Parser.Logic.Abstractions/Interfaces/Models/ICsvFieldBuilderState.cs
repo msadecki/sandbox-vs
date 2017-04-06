@@ -2,7 +2,7 @@
 {
     public interface ICsvFieldBuilderState
     {
-        char CurrentCharacter { get; set; }
+        char? CurrentCharacter { get; set; }
 
         int EndOfLineLengthToMatch { get; set; }
 
@@ -10,8 +10,8 @@
 
         bool IsEndOfLineSeekEnabled { get; set; }
 
-        bool IsQuotationMarkStartFieldSeekEnabled { get; set; }
+        bool IsQuotationMarkFirstInField { get; set; }
 
-        bool IsQuotationMarkEndFieldSeekEnabled { get; set; }
+        bool IsDelimiterOrEndOfLineRequired { get; set; }
     }
 }

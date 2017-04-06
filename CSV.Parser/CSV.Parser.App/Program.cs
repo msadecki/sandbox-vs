@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using CSV.Parser.Logic.Abstractions.Interfaces.Factories;
 using CSV.Parser.Logic.Configurations;
 using CSV.Parser.Logic.Factories;
-using CSV.Parser.Logic.Services;
 
 namespace CSV.Parser.App
 {
@@ -15,21 +15,36 @@ namespace CSV.Parser.App
 
             if (string.IsNullOrEmpty(filePath))
             {
-                Console.Write("Please pass filePath as first parameter");
+                Console.Write("Please pass file path as first parameter");
             }
             else if (!File.Exists(filePath))
             {
-                Console.Write($"Cannot find filePath given as first parameter \"{filePath}\"");
+                Console.Write($"Cannot find file on path given as first parameter \"{filePath}\"");
             }
             else
             {
-                var csvReader = new CsvReader(
-                    new TextReaderFactory(
-                        new EncodingConfiguration()),
-                    new CsvLineConsumerFactory(),
-                    new CsvStreamReaderFactory());
+                ICsvReaderFactory csvReaderFactory = new CsvReaderFactory(
+                    new CsvConfiguration(),
+                    new CsvFieldBuilderConfiguration(),
+                    new BufferableReaderConfiguration(),
+                    new OutputConfiguration(),
+                    new EncodingConfiguration());
 
-                csvReader.Read(filePath);
+                var csvReader = csvReaderFactory.Create();
+
+                try
+                {
+                    csvReader.Read(filePath);
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("---------------------");
+                    Console.WriteLine("An exception occurred");
+                    Console.WriteLine("---------------------");
+
+                    Console.WriteLine(exception);
+                }
             }
 
             Console.WriteLine();

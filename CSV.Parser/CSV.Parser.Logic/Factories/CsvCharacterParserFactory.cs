@@ -22,8 +22,7 @@ namespace CSV.Parser.Logic.Factories
         {
             return new CsvCharacterParser(
                 csvLineConsumer,
-                _csvConfiguration,
-                _csvFieldBuilderFactory);
+                _csvFieldBuilderFactory.Create(_csvConfiguration));
         }
     }
 }

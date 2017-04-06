@@ -10,6 +10,8 @@
 
         int DelimiterLenght { get; }
 
+        int QuotationMarkLenght { get; }
+
         int EndOfLineLength { get; }
     }
 }

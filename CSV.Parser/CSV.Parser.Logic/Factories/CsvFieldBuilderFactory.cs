@@ -31,7 +31,7 @@ namespace CSV.Parser.Logic.Factories
                 _csvFieldBuilderConfiguration,
                 _csvLineFactory,
                 _csvFieldFactory,
-                _csvFieldBuilderStateFactory);
+                _csvFieldBuilderStateFactory.Create());
         }
     }
 }

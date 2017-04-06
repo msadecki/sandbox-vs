@@ -10,21 +10,23 @@ namespace CSV.Parser.Logic.Configurations
         /// <summary>
         /// ','
         /// </summary>
-        public char Delimiter { get; } = ',';
+        public char Delimiter => ',';
 
         /// <summary>
         /// '"'
         /// </summary>
-        public char QuotationMark { get; } = '"';
+        public char QuotationMark => '"';
 
         /// <summary>
         /// CRLF
         /// "\r\n"
         /// Environment.NewLine 
         /// </summary>
-        public string EndOfLine { get; } = "\r\n";
+        public string EndOfLine => "\r\n";
 
-        public int DelimiterLenght { get; } = 1;
+        public int DelimiterLenght => 1;
+
+        public int QuotationMarkLenght => 1;
 
         public int EndOfLineLength => EndOfLine.Length;
     }

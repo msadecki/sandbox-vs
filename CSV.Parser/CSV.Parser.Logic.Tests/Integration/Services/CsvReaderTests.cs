@@ -14,8 +14,12 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
         public CsvReaderTests()
         {
             _csvReader = new CsvReader(
-                new TextReaderFactory(
-                    new EncodingConfiguration()),
+                new CsvConfiguration(),
+                new CsvFieldBuilderConfiguration(),
+                new BufferableReaderConfiguration(),
+                new OutputConfiguration(),
+                new EncodingConfiguration(),
+                new TextReaderFactory(),
                 new CsvLineConsumerFactory(),
                 new CsvStreamReaderFactory());
         }
@@ -44,6 +48,8 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
             yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.06.UTF16LE.BOM.txt", 8 };
             yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.07.UTF32.BOM.txt", 8 };
             yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.08.UTF8.BOM.EmptyLinesOnly.txt", 4 };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.09.UTF8.BOM.SingleLine.txt", 1 };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.10.UTF8.BOM.LastDelimiter.txt", 1 };
         }
     }
 }

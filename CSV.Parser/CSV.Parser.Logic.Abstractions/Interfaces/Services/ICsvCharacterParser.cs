@@ -2,7 +2,7 @@
 {
     public interface ICsvCharacterParser
     {
-        void ParseCharacter(char currentCharacter);
+        void ParseCharacter(char character);
 
         int ParseTail();
     }
