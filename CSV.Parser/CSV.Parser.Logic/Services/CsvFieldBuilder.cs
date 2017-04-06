@@ -77,11 +77,6 @@ namespace CSV.Parser.Logic.Services
 
             if (character == _csvConfiguration.QuotationMark)
             {
-                if (_state.IsDelimiterOrEndOfLineRequired)
-                {
-                    throw CreateCsvInvalidFormatException("Only delimiter or new line is allowed.");
-                }
-
                 if (_state.IsQuotationMarkFirstInField)
                 {
                     if (_state.CurrentCharacter == _csvConfiguration.QuotationMark)
@@ -143,7 +138,7 @@ namespace CSV.Parser.Logic.Services
         {
             if (_state.AppendantCharacter == _csvConfiguration.Delimiter)
             {
-                throw CreateCsvInvalidFormatException("The last field in the last line must not be followed by a delimiter only.");
+                throw CreateCsvInvalidFormatException("The last character in the last line must not be a field delimiter not followed by new line separator.");
             }
         }
 

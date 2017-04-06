@@ -118,10 +118,12 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
         private static IEnumerable<object[]> GetInvalidTestCases()
         {
             yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.11.UTF8.BOM.Invalid.txt", GetExceptionMessagePosition("Only delimiter or new line is allowed.", 1, 3, 1) };
-            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.12.UTF8.BOM.LastDelimiter.Invalid.txt", GetExceptionMessagePosition("The last field in the last line must not be followed by a delimiter only.", 1, 3, 0) };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.12.UTF8.BOM.LastDelimiter.Invalid.txt", GetExceptionMessagePosition("The last character in the last line must not be a field delimiter not followed by new line separator.", 1, 3, 0) };
             yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.13.UTF8.BOM.QuotationMark.Invalid.txt", GetExceptionMessagePosition("Quotation mark is not allowed inside a field that is not enclosed with quotation mark.", 1, 1, 1) };
             yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.14.UTF8.BOM.FieldsCount.Invalid.txt", GetExceptionMessagePosition("Each line should contain the same number of fields throughout the file.", 4, 2, 4) };
             yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.15.UTF8.BOM.FieldsCount.Invalid.txt", GetExceptionMessagePosition("Each line should contain the same number of fields throughout the file.", 2, 6, 4) };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.16.UTF8.BOM.Invalid.txt", GetExceptionMessagePosition("Only delimiter or new line is allowed.", 1, 2, 20) };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.17.UTF8.BOM.QuotationMark.Invalid.txt", GetExceptionMessagePosition("Only delimiter or new line is allowed.", 1, 1, 1) };
         }
 
         private static string GetExceptionMessagePosition(
