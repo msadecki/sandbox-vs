@@ -46,7 +46,7 @@
     <Compile Include="Configurations\OutputConfiguration.cs" />
     <Compile Include="Factories\CsvFieldBuilderStateFactory.cs" />
     <Compile Include="Factories\CsvReaderFactory.cs" />
-    <Compile Include="Factories\OuputLineFactory.cs" />
+    <Compile Include="Factories\OutputLineFactory.cs" />
     <Compile Include="Models\CsvField.cs" />
     <Compile Include="Models\CsvLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

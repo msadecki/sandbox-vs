@@ -13,7 +13,7 @@ namespace CSV.Parser.Logic.Services
         private readonly IEncodingConfiguration _encodingConfiguration;
         private readonly ITextReaderFactory _textReaderFactory;
         private readonly ITextWriterFactory _textWriterFactory;
-        private readonly IOuputLineFactory _ouputLineFactory;
+        private readonly IOutputLineFactory _outputLineFactory;
         private readonly ICsvLineConsumerFactory _csvLineConsumerFactory;
         private readonly ICsvStreamReaderFactory _csvStreamReaderFactory;
 
@@ -25,7 +25,7 @@ namespace CSV.Parser.Logic.Services
             IEncodingConfiguration encodingConfiguration,
             ITextReaderFactory textReaderFactory,
             ITextWriterFactory textWriterFactory,
-            IOuputLineFactory ouputLineFactory,
+            IOutputLineFactory outputLineFactory,
             ICsvLineConsumerFactory csvLineConsumerFactory,
             ICsvStreamReaderFactory csvStreamReaderFactory)
         {
@@ -36,7 +36,7 @@ namespace CSV.Parser.Logic.Services
             _encodingConfiguration = encodingConfiguration;
             _textReaderFactory = textReaderFactory;
             _textWriterFactory = textWriterFactory;
-            _ouputLineFactory = ouputLineFactory;
+            _outputLineFactory = outputLineFactory;
             _csvLineConsumerFactory = csvLineConsumerFactory;
             _csvStreamReaderFactory = csvStreamReaderFactory;
         }
@@ -49,7 +49,7 @@ namespace CSV.Parser.Logic.Services
                 {
                     var csvLineConsumer = _csvLineConsumerFactory.Create(
                         textWriter,
-                        _ouputLineFactory);
+                        _outputLineFactory);
 
                     var csvStreamReader = _csvStreamReaderFactory.Create(
                         _csvConfiguration,

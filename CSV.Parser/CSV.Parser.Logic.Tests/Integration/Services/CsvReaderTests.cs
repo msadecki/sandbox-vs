@@ -45,11 +45,11 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
             // Arrange
             _csvLineConsumerFactoryMock = new Mock<ICsvLineConsumerFactory>();
             _csvLineConsumerFactoryMock
-                .Setup(x => x.Create(It.IsAny<TextWriter>(), It.IsAny<IOuputLineFactory>()))
-                .Returns((TextWriter textWriter, IOuputLineFactory ouputLineFactory) =>
+                .Setup(x => x.Create(It.IsAny<TextWriter>(), It.IsAny<IOutputLineFactory>()))
+                .Returns((TextWriter textWriter, IOutputLineFactory outputLineFactory) =>
                 {
                     var csvLineConsumerFactory = new CsvLineConsumerFactory();
-                    var csvLineConsumer = csvLineConsumerFactory.Create(textWriter, ouputLineFactory);
+                    var csvLineConsumer = csvLineConsumerFactory.Create(textWriter, outputLineFactory);
                     _csvLineConsumerDecorator = new CsvLineConsumerDecorator(csvLineConsumer);
                     return _csvLineConsumerDecorator;
                 });
@@ -64,7 +64,7 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
                 new EncodingConfiguration(),
                 new TextReaderFactory(),
                 new TextWriterFactory(),
-                new OuputLineFactory(outputConfiguration),
+                new OutputLineFactory(outputConfiguration),
                 _csvLineConsumerFactoryMock.Object,
                 new CsvStreamReaderFactory());
         }
@@ -89,7 +89,7 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
             }
 
             _csvLineConsumerFactoryMock
-                .Verify(x => x.Create(It.IsAny<TextWriter>(), It.IsAny<IOuputLineFactory>()), Times.Once);
+                .Verify(x => x.Create(It.IsAny<TextWriter>(), It.IsAny<IOutputLineFactory>()), Times.Once);
         }
 
         [Theory]

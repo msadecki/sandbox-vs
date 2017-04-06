@@ -8,19 +8,19 @@ namespace CSV.Parser.Logic.Services
     public sealed class CsvLineConsumer : ICsvLineConsumer
     {
         private readonly TextWriter _textWriter;
-        private readonly IOuputLineFactory _ouputLineFactory;
+        private readonly IOutputLineFactory _outputLineFactory;
 
         public CsvLineConsumer(
             TextWriter textWriter,
-            IOuputLineFactory ouputLineFactory)
+            IOutputLineFactory outputLineFactory)
         {
             _textWriter = textWriter;
-            _ouputLineFactory = ouputLineFactory;
+            _outputLineFactory = outputLineFactory;
         }
 
         public void Consume(ICsvLine csvLine)
         {
-            _textWriter.Write(_ouputLineFactory.Create(csvLine));
+            _textWriter.Write(_outputLineFactory.Create(csvLine));
         }
     }
 }

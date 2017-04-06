@@ -5,11 +5,11 @@ using CSV.Parser.Logic.Abstractions.Interfaces.Models;
 
 namespace CSV.Parser.Logic.Factories
 {
-    public class OuputLineFactory : IOuputLineFactory
+    public class OutputLineFactory : IOutputLineFactory
     {
         private readonly IOutputConfiguration _outputConfiguration;
 
-        public OuputLineFactory(
+        public OutputLineFactory(
             IOutputConfiguration outputConfiguration)
         {
             _outputConfiguration = outputConfiguration;

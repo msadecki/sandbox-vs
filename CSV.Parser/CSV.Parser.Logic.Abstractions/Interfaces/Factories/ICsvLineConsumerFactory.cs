@@ -7,6 +7,6 @@ namespace CSV.Parser.Logic.Abstractions.Interfaces.Factories
     {
         ICsvLineConsumer Create(
             TextWriter textWriter,
-            IOuputLineFactory ouputLineFactory);
+            IOutputLineFactory outputLineFactory);
     }
 }

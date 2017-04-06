@@ -9,11 +9,11 @@ namespace CSV.Parser.Logic.Factories
     {
         public ICsvLineConsumer Create(
             TextWriter textWriter,
-            IOuputLineFactory ouputLineFactory)
+            IOutputLineFactory outputLineFactory)
         {
             return new CsvLineConsumer(
                 textWriter,
-                ouputLineFactory);
+                outputLineFactory);
         }
     }
 }
