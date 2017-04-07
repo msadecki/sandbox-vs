@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using CSV.Parser.Logic.Abstractions.Interfaces.Configurations;
 using CSV.Parser.Logic.Abstractions.Interfaces.Factories;
 using CSV.Parser.Logic.Abstractions.Interfaces.Models;
@@ -11,7 +10,6 @@ namespace CSV.Parser.Logic.Services
     public class CsvFieldBuilder : ICsvFieldBuilder
     {
         private readonly ICsvConfiguration _csvConfiguration;
-        private readonly ICsvFieldBuilderConfiguration _csvFieldBuilderConfiguration;
         private readonly ICsvLineFactory _csvLineFactory;
         private readonly ICsvFieldFactory _csvFieldFactory;
         private readonly ICsvFieldBuilderState _state;
@@ -35,13 +33,12 @@ namespace CSV.Parser.Logic.Services
             ICsvFieldBuilderState state)
         {
             _csvConfiguration = csvConfiguration;
-            _csvFieldBuilderConfiguration = csvFieldBuilderConfiguration;
             _csvLineFactory = csvLineFactory;
             _csvFieldFactory = csvFieldFactory;
             _state = state;
             _rawFieldBuilder = new StringBuilder(csvFieldBuilderConfiguration.RawFieldBuilderCapacity);
 
-            CurrentCsvLine = _csvLineFactory.Create(_csvFieldBuilderConfiguration.CsvLineFieldsCapacity);
+            CurrentCsvLine = _csvLineFactory.Create(csvFieldBuilderConfiguration.CsvLineFieldsCapacity);
 
             ClearState();
             _state.FieldsCount = null;
@@ -59,7 +56,7 @@ namespace CSV.Parser.Logic.Services
                 throw CreateCsvInvalidFormatException("Each line should contain the same number of fields throughout the file.");
             }
 
-            CurrentCsvLine = _csvLineFactory.Create(_csvFieldBuilderConfiguration.CsvLineFieldsCapacity);
+            CurrentCsvLine = _csvLineFactory.Create(_state.FieldsCount.Value);
             CurrentCsvLineIndex++;
 
             InitNewField();
