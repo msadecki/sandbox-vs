@@ -25,6 +25,11 @@ namespace CSV.Parser.Logic.Services
 
         public int CurrentCsvLineIndex { get; private set; }
 
+        private string CurrentPosition => GetPosition(
+            CurrentCsvLineIndex + 1,
+            CurrentCsvLine.Fields.Count + 1,
+            RawFieldBuilderLength);
+
         public CsvFieldBuilder(
             ICsvConfiguration csvConfiguration,
             ICsvFieldBuilderConfiguration csvFieldBuilderConfiguration,
@@ -180,23 +185,15 @@ namespace CSV.Parser.Logic.Services
 
         private CsvInvalidFormatException CreateCsvInvalidFormatException(string message)
         {
-            return new CsvInvalidFormatException($"{message} {GetPosition()}");
-        }
-
-        private string GetPosition()
-        {
-            return GetPosition(
-                CurrentCsvLineIndex + 1,
-                CurrentCsvLine.Fields.Count,
-                RawFieldBuilderLength);
+            return new CsvInvalidFormatException($"{message} {CurrentPosition}");
         }
 
         private static string GetPosition(
             int line,
             int field,
-            int fieldContentLength)
+            int content)
         {
-            return $"{{ Line: {line}, Field: {field}, FieldContentLength: {fieldContentLength} }}";
+            return $"{{ Line: {line}, Field: {field}, Content: {content} }}";
         }
     }
 }

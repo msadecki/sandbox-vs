@@ -108,6 +108,9 @@
     <Content Include="Integration\TestCases\CsvReader\CSV.14.UTF8.BOM.FieldsCount.Invalid.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Integration\TestCases\CsvReader\CSV.18.UTF8.BOM.QuotationMark.Invalid.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Integration\TestCases\CsvReader\CSV.17.UTF8.BOM.QuotationMark.Invalid.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

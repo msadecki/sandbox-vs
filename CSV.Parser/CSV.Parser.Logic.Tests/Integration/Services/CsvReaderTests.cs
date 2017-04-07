@@ -94,11 +94,11 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
 
         [Theory]
         [MemberData(nameof(GetInvalidTestCases))]
-        public void Read_Should_Throw_CsvInvalidFormatException_With_ExpectedMessage(string filePath, string expectedExceptionMessage)
+        public void Read_Should_Throw_CsvInvalidFormatException_With_ExpectedMessage(string filePath, string expectedMessage)
         {
             // Act & Assert
             var actualException = Assert.Throws<CsvInvalidFormatException>(() => _csvReader.Read(filePath));
-            Assert.Equal(expectedExceptionMessage, actualException.Message);
+            Assert.Equal(expectedMessage, actualException.Message);
         }
 
         private static IEnumerable<object[]> GetValidTestCases()
@@ -117,22 +117,23 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
 
         private static IEnumerable<object[]> GetInvalidTestCases()
         {
-            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.11.UTF8.BOM.Invalid.txt", GetExceptionMessagePosition("Only delimiter or new line is allowed.", 1, 3, 1) };
-            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.12.UTF8.BOM.LastDelimiter.Invalid.txt", GetExceptionMessagePosition("The last character in the last line must not be a field delimiter not followed by new line separator.", 1, 3, 0) };
-            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.13.UTF8.BOM.QuotationMark.Invalid.txt", GetExceptionMessagePosition("Quotation mark is not allowed inside a field that is not enclosed with quotation mark.", 1, 1, 1) };
-            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.14.UTF8.BOM.FieldsCount.Invalid.txt", GetExceptionMessagePosition("Each line should contain the same number of fields throughout the file.", 4, 2, 4) };
-            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.15.UTF8.BOM.FieldsCount.Invalid.txt", GetExceptionMessagePosition("Each line should contain the same number of fields throughout the file.", 2, 6, 4) };
-            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.16.UTF8.BOM.Invalid.txt", GetExceptionMessagePosition("Only delimiter or new line is allowed.", 1, 2, 20) };
-            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.17.UTF8.BOM.QuotationMark.Invalid.txt", GetExceptionMessagePosition("Only delimiter or new line is allowed.", 1, 1, 1) };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.11.UTF8.BOM.Invalid.txt", GetExceptionMessage("Only delimiter or new line is allowed.", 1, 4, 1) };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.12.UTF8.BOM.LastDelimiter.Invalid.txt", GetExceptionMessage("The last character in the last line must not be a field delimiter not followed by new line separator.", 1, 4, 0) };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.13.UTF8.BOM.QuotationMark.Invalid.txt", GetExceptionMessage("Quotation mark is not allowed inside a field that is not enclosed with quotation mark.", 1, 2, 1) };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.14.UTF8.BOM.FieldsCount.Invalid.txt", GetExceptionMessage("Each line should contain the same number of fields throughout the file.", 4, 3, 4) };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.15.UTF8.BOM.FieldsCount.Invalid.txt", GetExceptionMessage("Each line should contain the same number of fields throughout the file.", 2, 7, 4) };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.16.UTF8.BOM.Invalid.txt", GetExceptionMessage("Only delimiter or new line is allowed.", 1,3, 20) };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.17.UTF8.BOM.QuotationMark.Invalid.txt", GetExceptionMessage("Only delimiter or new line is allowed.", 1, 2, 1) };
+            yield return new object[] { @".\Integration\TestCases\CsvReader\CSV.18.UTF8.BOM.QuotationMark.Invalid.txt", GetExceptionMessage("Only delimiter or new line is allowed.", 2, 1, 1) };
         }
 
-        private static string GetExceptionMessagePosition(
+        private static string GetExceptionMessage(
             string message,
             int line,
             int field,
-            int fieldContentLength)
+            int content)
         {
-            return $"{message} {{ Line: {line}, Field: {field}, FieldContentLength: {fieldContentLength} }}";
+            return $"{message} {{ Line: {line}, Field: {field}, Content: {content} }}";
         }
     }
 }
