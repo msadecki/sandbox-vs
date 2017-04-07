@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using CSV.Parser.Logic.Abstractions.Interfaces.Configurations;
 using CSV.Parser.Logic.Abstractions.Interfaces.Factories;
 using CSV.Parser.Logic.Abstractions.Interfaces.Models;
@@ -160,6 +161,12 @@ namespace CSV.Parser.Logic.Services
         private void BuildNewField(int charactersToIgnoreCount)
         {
             var fieldContent = _rawFieldBuilder.ToString(0, RawFieldBuilderLength - charactersToIgnoreCount);
+
+            if (fieldContent == string.Empty
+                && !_state.IsQuotationMarkFirstInField)
+            {
+                fieldContent = null;
+            }
 
             CurrentCsvLine.Fields.Add(_csvFieldFactory.Create(fieldContent));
         }

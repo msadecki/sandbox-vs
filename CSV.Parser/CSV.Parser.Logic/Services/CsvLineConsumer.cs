@@ -5,7 +5,7 @@ using CSV.Parser.Logic.Abstractions.Interfaces.Services;
 
 namespace CSV.Parser.Logic.Services
 {
-    public sealed class CsvLineConsumer : ICsvLineConsumer
+    public class CsvLineConsumer : ICsvLineConsumer
     {
         private readonly TextWriter _textWriter;
         private readonly IOutputLineFactory _outputLineFactory;

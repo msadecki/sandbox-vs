@@ -15,7 +15,7 @@ namespace CSV.Parser.Logic.Tests.Integration.Services
 {
     public class CsvReaderTests
     {
-        private sealed class CsvLineConsumerDecorator : ICsvLineConsumer
+        private class CsvLineConsumerDecorator : ICsvLineConsumer
         {
             private readonly ICsvLineConsumer _csvLineConsumer;
 
